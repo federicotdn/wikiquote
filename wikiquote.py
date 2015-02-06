@@ -29,6 +29,9 @@ def search(s):
 	return results
 
 def is_disambiguation(categories):
+	if not categories:
+		return True
+	
 	for cat in categories:
 		if cat['*'] == 'Disambiguation_pages':
 			return True
