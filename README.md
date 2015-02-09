@@ -5,11 +5,11 @@ Retrieve quotes from any Wikiquote.org page, with Python 3 (inspired by the `wik
 ```python
 >>> import wikiquote
 
->>> wikiquote.search('Fight Club')
-# ['Fight Club', 'Fight Club (film)', 'Main Page', 'Chuck Palahniuk', 'Fight Club (novel)']
+>>> wikiquote.search('Dune')
+# ['Dune', 'Frank Herbert', 'Children of Dune (TV miniseries)', 'Dune (film)', 'Dune (TV miniseries)']
 
->>> wikiquote.quotes('Fight Club (film)', 4) # will return 4 quotes, default is 20
-# ['On a long enough time line, the survival rate for everyone drops to zero.', 'I felt like destroying something beautiful.', "I am Jack's wasted life.", "I am Jack's smirking revenge."]
+>>> wikiquote.quotes('Dune', max_quotes = 3) # max_quotes defaults to 20
+# ['A popular man arouses the jealousy of the powerful.', 'Parting with friends is a sadness. A place is only a place.', 'Hope clouds observation.']
 ```
 
 Some page titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception.  If the page does not exist, a `NoSuchPageException` will be raised instead.
@@ -19,8 +19,8 @@ Use `random.choice()` to select a random quote:
 ```python
 >>> import wikiquote, random
 
->>> random.choice(wikiquote.quotes('Dune'))
-# 'Hope clouds observation.'
+>>> random.choice(wikiquote.quotes('Linus Torvalds'))
+# 'WE DO NOT BREAK USERSPACE!'
 ```
 
 ## TODO

@@ -58,9 +58,15 @@ def extract_quotes(html_content, max_quotes):
 	tree = lxml.html.fromstring(html_content)
 	quotes_list = []
 
-	txt_list = tree.xpath('//div/ul/li')
-	for txt in txt_list:
+	# List items inside unordered lists
+	node_list = tree.xpath('//div/ul/li')
 
+	# Description tags inside description lists (first is generally not a quote)
+	dd_list = tree.xpath('//div/dl/dd')[1:]
+	if len(dd_list) > len(node_list):
+		node_list = dd_list + node_list
+
+	for txt in node_list:
 		uls = txt.xpath('ul')
 		for ul in uls:
 			ul.getparent().remove(ul)
