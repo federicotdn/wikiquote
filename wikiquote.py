@@ -1,4 +1,7 @@
-import urllib.request, urllib.parse, json, lxml.html
+import urllib.request
+import urllib.parse
+import json
+import lxml.html
 
 
 class NoSuchPageException(Exception):
@@ -8,8 +11,9 @@ class NoSuchPageException(Exception):
 class DisambiguationPageException(Exception):
     pass
 
-SEARCH_URL = 'http://en.wikiquote.org/w/api.php?format=json&action=query&list=search&continue=&srsearch='
-PAGE_URL = 'http://en.wikiquote.org/w/api.php?format=json&action=parse&prop=text|categories&page='
+W_URL = 'http://en.wikiquote.org/w/api.php'
+SRCH_URL = W_URL + '?format=json&action=query&list=search&continue=&srsearch='
+PAGE_URL = W_URL + '?format=json&action=parse&prop=text|categories&page='
 MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
 DEFAULT_MAX_QUOTES = 20
@@ -23,24 +27,45 @@ def json_from_url(url):
 
 
 def search(s):
+    if not s:
+        return []
     search_terms = urllib.parse.quote(s)
-    data = json_from_url(SEARCH_URL + search_terms)
+    data = json_from_url(SRCH_URL + search_terms)
     results = [entry['title'] for entry in data['query']['search']]
     return results
 
 
 def is_disambiguation(categories):
     # Checks to see if at least one category includes 'Disambiguation_pages'
-    return not categories or any([category['*'] == 'Disambiguation_pages' for category in categories])
+    return not categories or any([
+        category['*'] == 'Disambiguation_pages' for category in categories
+    ])
+
+
+def is_cast_credit(txt):
+    # Checks to see if the text is a cast credit:
+    #   <actor name> as <character name>
+    #   <actor name> - <character name>
+    if len(txt) < 3:
+        return False
+
+    conditions = [
+        txt[0][0].isupper(),
+        txt[1][0].isupper(),
+        txt[2] in ['as', '-']
+    ]
+
+    return all(conditions)
 
 
 def is_quote(txt):
-    txt_split = txt.strip().split()
+    txt_split = txt.split()
     invalid_conditions = [
         not txt or not txt[0].isupper() or len(txt) < MIN_QUOTE_LEN,
         len(txt_split) < MIN_QUOTE_WORDS,
         any([True for word in txt_split if word in WORD_BLACKLIST]),
-        txt.endswith(('(', ':', ']'))
+        txt.endswith(('(', ':', ']')),
+        is_cast_credit(txt_split)
     ]
 
     # Returns false if any invalid conditions are true, otherwise returns True.
@@ -54,7 +79,8 @@ def extract_quotes(html_content, max_quotes):
     # List items inside unordered lists
     node_list = tree.xpath('//div/ul/li')
 
-    # Description tags inside description lists (first is generally not a quote)
+    # Description tags inside description lists,
+    # first one is generally not a quote
     dd_list = tree.xpath('//div/dl/dd')[1:]
     if len(dd_list) > len(node_list):
         node_list += dd_list
@@ -78,7 +104,8 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES):
         raise NoSuchPageException('No pages matched the title: ' + page_title)
 
     if is_disambiguation(data['parse']['categories']):
-        raise DisambiguationPageException('Title returned a disambiguation page.')
+        raise DisambiguationPageException(
+                                       'Title returned a disambiguation page.')
 
     html_content = data['parse']['text']['*']
     return extract_quotes(html_content, max_quotes)
