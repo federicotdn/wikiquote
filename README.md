@@ -24,4 +24,6 @@ Use `random.choice()` to select a random quote:
 ```
 
 ## TODO
-Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
+- Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
+- Quote of the day.
+- Further PEP8 formatting.
