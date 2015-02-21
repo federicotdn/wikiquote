@@ -14,6 +14,7 @@ class DisambiguationPageException(Exception):
 W_URL = 'http://en.wikiquote.org/w/api.php'
 SRCH_URL = W_URL + '?format=json&action=query&list=search&continue=&srsearch='
 PAGE_URL = W_URL + '?format=json&action=parse&prop=text|categories&page='
+MAINPAGE_URL = W_URL + '?format=json&action=parse&page=Main%20Page&prop=text'
 MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
 DEFAULT_MAX_QUOTES = 20
@@ -112,3 +113,14 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES):
 
     html_content = data['parse']['text']['*']
     return extract_quotes(html_content, max_quotes)
+
+
+def quote_of_the_day():
+    data = json_from_url(MAINPAGE_URL)
+    tree = lxml.html.fromstring(data['parse']['text']['*'])
+    tree = tree.get_element_by_id('mf-qotd')
+
+    raw_quote = tree.xpath('div/div/table/tr')[0].text_content().split('~')
+    quote = raw_quote[0].strip()
+    author = raw_quote[1].strip()
+    return quote, author
