@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/federicotdn/python-wikiquotes.svg?branch=travis)](https://travis-ci.org/federicotdn/python-wikiquotes)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 # python-wikiquotes
 Retrieve quotes from any Wikiquote.org page, with Python 3 (inspired by the `wikipedia` module).  Uses the `lxml` module to parse HTML.  Quotes are not always found correctly because of Wikiquote's varying page layouts.  Contributions are welcome.
 

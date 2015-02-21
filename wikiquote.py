@@ -91,9 +91,12 @@ def extract_quotes(html_content, max_quotes):
             ul.getparent().remove(ul)
 
         txt = txt.text_content().strip()
-        if is_quote(txt) and max_quotes >= len(quotes_list):
+        if is_quote(txt) and max_quotes > len(quotes_list):
             txt_normal = ' '.join(txt.split())
             quotes_list.append(txt_normal)
+
+            if max_quotes == len(quotes_list):
+                break
 
     return quotes_list
 
