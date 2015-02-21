@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/federicotdn/python-wikiquotes.svg?branch=travis)](https://travis-ci.org/federicotdn/python-wikiquotes)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Retrieve quotes from any Wikiquote.org page, with Python 3 (inspired by the `wikipedia` module).  Uses the `lxml` module to parse HTML.  Quotes are not always found correctly because of Wikiquote's varying page layouts.  Contributions are welcome.
+Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Python 3 (inspired by the `wikipedia` module).  Uses the `lxml` module to parse HTML.  Quotes are not always found correctly because of Wikiquote's varying page layouts.  Contributions are welcome.
 
 ## Usage
 ```python
@@ -32,5 +32,4 @@ Use `random.choice()` to select a random quote:
 
 ## TODO
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
-- Quote of the day.
-- ~~Further PEP8 formatting.~~ (done, checked with [pep8](https://github.com/jcrocholl/pep8))
+- Add more/better tests.
