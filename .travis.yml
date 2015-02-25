@@ -7,4 +7,4 @@ install:
 
 script:
   - pep8 wikiquote.py
-  - python3 -m unittest discover tests/ '*test.py'
+  - python3 -m unittest
