@@ -30,6 +30,16 @@ Use `random.choice()` to select a random quote:
 # 'WE DO NOT BREAK USERSPACE!'
 ```
 
+## Developing / Testing
+Check that all tests pass:
+```bash
+$ python3 -m unittest -v
+```
+Check that `wikiquote.py` follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
+```bash
+$ pep8 wikiquote.py
+```
+
 ## TODO
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
 - Add more/better tests.
