@@ -43,20 +43,15 @@ def is_disambiguation(categories):
     ])
 
 
-def is_cast_credit(txt):
+def is_cast_credit(txt_split):
     # Checks to see if the text is a cast credit:
     #   <actor name> as <character name>
     #   <actor name> - <character name>
-    if len(txt) < 3:
+    if not 2 < len(txt_split) < 7:
         return False
 
-    conditions = [
-        txt[0][0].isupper(),
-        txt[1][0].isupper(),
-        txt[2] in ['as', '-']
-    ]
-
-    return all(conditions)
+    separators = ['as', '-', '–']
+    return all([w[0].isupper() or w in separators for w in txt_split])
 
 
 def is_quote(txt):
