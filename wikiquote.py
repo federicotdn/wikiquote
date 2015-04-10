@@ -51,7 +51,8 @@ def is_cast_credit(txt_split):
         return False
 
     separators = ['as', '-', '–']
-    return all([w[0].isupper() or w in separators for w in txt_split])
+    return all([w[0].isupper() or w in separators or w[0] == '"'
+               for w in txt_split])
 
 
 def is_quote(txt):
