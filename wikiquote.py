@@ -51,7 +51,8 @@ def is_cast_credit(txt_split):
         return False
 
     separators = ['as', '-', '–']
-    return all([w[0].isupper() or w in separators for w in txt_split])
+    return all([w[0].isupper() or w in separators or w[0] == '"'
+               for w in txt_split])
 
 
 def is_quote(txt):
@@ -104,7 +105,7 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES):
 
     if is_disambiguation(data['parse']['categories']):
         raise DisambiguationPageException(
-                                       'Title returned a disambiguation page.')
+            'Title returned a disambiguation page.')
 
     html_content = data['parse']['text']['*']
     return extract_quotes(html_content, max_quotes)

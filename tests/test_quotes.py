@@ -23,3 +23,10 @@ class QuotesTest(unittest.TestCase):
     def test_max_quotes(self):
         quotes = wikiquote.quotes('The Matrix (film)', max_quotes = 8)
         self.assertEqual(len(quotes), 8)
+
+    def test_is_cast_credit(self):
+      cast1 = 'Bryan Cranston - Walter White'.split()
+      cast2 = 'Giancarlo Esposito - Gustavo "Gus" Fring'.split()
+
+      self.assertTrue(wikiquote.is_cast_credit(cast1))
+      self.assertTrue(wikiquote.is_cast_credit(cast2))
