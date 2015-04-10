@@ -104,7 +104,7 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES):
 
     if is_disambiguation(data['parse']['categories']):
         raise DisambiguationPageException(
-                                       'Title returned a disambiguation page.')
+            'Title returned a disambiguation page.')
 
     html_content = data['parse']['text']['*']
     return extract_quotes(html_content, max_quotes)
