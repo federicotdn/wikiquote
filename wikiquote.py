@@ -31,6 +31,36 @@ def json_from_url(url):
     return json.loads(body)
 
 
+def category_members(category, command='subcat', lang='en'):
+    '''Generate a list of members of a category (subactegory xor pages)
+
+    Keyword arguments:
+    category -- the category
+    command -- the type of members ('page' or 'subcat', default 'subcat'
+    lang -- lang of your category (default 'en'
+    '''
+    if command not in ['subcat', 'page']:
+        raise ValueError('Unknown command {}'.format(command))
+    category = urllib.parse.quote(category)
+    page = CTGRY_MMBRS_URL.format(lang=lang,
+                                  cmcontinue='{cmcontinue}',
+                                  page=category,
+                                  command=command)
+    cmcontinue = ''
+    while_end = True
+    while while_end:
+        # Wikiquote doesn't give you all members,
+        # you need to ask for the next page
+        current_page = page.format(cmcontinue=cmcontinue)
+        my_json = json_from_url(current_page)
+        try:
+            cmcontinue = my_json['continue']['cmcontinue']
+        except KeyError:
+            while_end = False
+        for item in my_json['query']['categorymembers']:
+            yield item['title']
+
+
 def search(s, lang='en'):
     if not s:
         return []
