@@ -182,7 +182,7 @@ def explore_category(category, lang='en', categories=set()):
     categories.update(new_categories)
     pages = set(category_members(category, command='page', lang=lang))
     for page in pages:
-        try :
+        try:
             new_quote_index = [(page, index, lang)
                                for index, quote
                                in enumerate(quotes(page, lang=lang))]
@@ -250,19 +250,20 @@ def quotes_fr_original(page_title, max_quotes=DEFAULT_MAX_QUOTES):
     html_content = data['parse']['text']['*']
     soup = BeautifulSoup(html_content)
     spans = soup.find_all('span')
-    quotes = [{'span': span, 'vf': span.text}
+    quotes = [{'span': span, 'vf': span.text.replace('\xa0', ' ')}
               for span in spans
               if 'class' in span.attrs and 'citation' in span['class']]
     # get original, if any
     for quote in quotes:
         try:
             quote['vo'] = next(
-                span.text for span in list(
+                span.text.replace('\xa0', ' ') for span in list(
                     quote['span'].parent.next_siblings)[1].find_all('span')
                 if 'class' in span.attrs and 'original' in span['class'])
         except IndexError:
             quote['vo'] = None
         except StopIteration:
             quote['vo'] = None
-    quotes = [(quote['vf'], quote['vo']) for quote in quotes]
+    quotes = [(quote['vf'], quote['vo'])
+              for quote in quotes]
     return quotes
