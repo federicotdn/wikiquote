@@ -3,7 +3,7 @@ python:
   - "3.4"
 
 install:
-  - pip install pep8 lxml beautifulsoup4
+  - pip install pep8 lxml
 
 script:
   - pep8 wikiquote.py
