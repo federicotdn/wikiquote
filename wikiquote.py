@@ -4,6 +4,7 @@ import json
 import lxml.html
 import random
 from bs4 import BeautifulSoup
+from itertools import islice
 
 
 class NoSuchPageException(Exception):
@@ -12,6 +13,11 @@ class NoSuchPageException(Exception):
 
 class DisambiguationPageException(Exception):
     pass
+
+
+class UnsupportedLanguageException(Exception):
+    pass
+
 
 W_URL = 'http://{lang}.wikiquote.org/w/api.php'
 SRCH_URL = W_URL + '?format=json&action=query&list=search&continue=&srsearch='
@@ -24,6 +30,7 @@ MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
 DEFAULT_MAX_QUOTES = 20
 WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:']
+SUPPORTED_LANGUAGES = ['en', 'fr']
 
 
 def json_from_url(url):
@@ -54,6 +61,9 @@ def category_members(category, command='subcat', lang='en'):
         # you need to ask for the next page
         current_page = page.format(cmcontinue=cmcontinue)
         my_json = json_from_url(current_page)
+        if 'error' in my_json:
+            raise NoSuchPageException(
+                    'No category matched the title: ' + category)
         try:
             cmcontinue = my_json['continue']['cmcontinue']
         except KeyError:
@@ -143,13 +153,17 @@ def extract_quotes_fr(html_content, max_quotes):
     '''
     soup = BeautifulSoup(html_content)
     spans = soup.find_all('span')
-    quotes = [span.text
-              for span in spans
-              if 'class' in span.attrs and 'citation' in span['class']]
+    quotes = list(islice((span.text
+                          for span in spans
+                          if 'class' in span.attrs and
+                          'citation' in span['class']),
+                         max_quotes))
     return quotes
 
 
 def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang='en'):
+    if lang not in SUPPORTED_LANGUAGES:
+        raise UnsupportedLanguageException('Unsupported language ' + lang)
     local_page_url = PAGE_URL.format(lang=lang)
     data = json_from_url(local_page_url + urllib.parse.quote(page_title))
     if 'error' in data:
@@ -165,7 +179,7 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang='en'):
     return extract_quotes(html_content, max_quotes)
 
 
-def explore_category(category, lang='en', categories=set()):
+def explore_category(category, lang='en', categories=None):
     '''Recursively explore and index quotes
     from a category and its subcategories
 
@@ -174,6 +188,9 @@ def explore_category(category, lang='en', categories=set()):
     lang -- lang of the wiki
     categories -- categories to ignore
     '''
+
+    if categories is None:
+        categories = set()
     subs = set(category_members(category, command='subcat', lang=lang))
     new_categories = set(sub for sub in subs if sub not in categories)
     quotes_index = []
@@ -228,7 +245,7 @@ def random_quote_from_categories(quote_index):
     return quote, page
 
 
-def quotes_fr_original(page_title, max_quotes=DEFAULT_MAX_QUOTES):
+def quotes_with_original(page_title, lang='en', max_quotes=DEFAULT_MAX_QUOTES):
     '''Extract quotes from the french wiki with original version:
     Some quotes translated to french come with the original one.
     this retrive boths as a tuple (french,original).
@@ -238,7 +255,12 @@ def quotes_fr_original(page_title, max_quotes=DEFAULT_MAX_QUOTES):
     html_content -- the data returned by the wikiquote api
     max_quote -- max number of quotes to retrieve
     '''
-    local_page_url = PAGE_URL.format(lang='fr')
+    if lang not in SUPPORTED_LANGUAGES:
+        raise UnsupportedLanguageException('Unsupported language ' + lang)
+
+    if lang == 'en':
+        return []
+    local_page_url = PAGE_URL.format(lang=lang)
     data = json_from_url(local_page_url + urllib.parse.quote(page_title))
     if 'error' in data:
         raise NoSuchPageException('No pages matched the title: ' + page_title)
