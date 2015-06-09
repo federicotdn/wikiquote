@@ -16,12 +16,26 @@ class QuotesTest(unittest.TestCase):
                           wikiquote.quotes,
                           'aaksejhfkasehfksdfsa')
 
+    def unsupported_lang(self):
+        self.assertRaise(wikiquote.UnsupportedLanguageException,
+                         wikiquotes.quotes,
+                         'Matrix',
+                         lang='hlhljopjpojkopijj')
+
     def test_normal_quotes(self):
         quotes = wikiquote.quotes('The Matrix (film)')
         self.assertTrue(len(quotes) > 0)
 
+    def test_lang_quotes(self):
+        quotes = wikiquote.quotes('Matrix', lang='fr')
+        self.assertTrue(len(quotes) > 0)
+
     def test_max_quotes(self):
         quotes = wikiquote.quotes('The Matrix (film)', max_quotes = 8)
+        self.assertEqual(len(quotes), 8)
+
+    def test_max_quotes_and_lang(self):
+        quotes = wikiquote.quotes('Matrix', lang='fr', max_quotes = 8)
         self.assertEqual(len(quotes), 8)
 
     def test_is_cast_credit(self):
