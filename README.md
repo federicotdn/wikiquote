@@ -1,7 +1,8 @@
 # python-wikiquotes
 [![Build Status](https://travis-ci.org/federicotdn/python-wikiquotes.svg?branch=travis)](https://travis-ci.org/federicotdn/python-wikiquotes)
-![License](https://pypip.in/license/wikiquote/badge.svg?style=flat)
-[![Downloads](https://pypip.in/download/wikiquote/badge.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
+![License](http://img.shields.io/pypi/l/wikiquote.svg?style=flat)
+[![Downloads](http://img.shields.io/pypi/dm/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
+[![Version](http://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 
 Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Python 3 (inspired by the `wikipedia` module).  Uses the `lxml` module to parse HTML.  Quotes are not always found correctly because of Wikiquote's varying page layouts.  Contributions are welcome.
 
