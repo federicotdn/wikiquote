@@ -26,16 +26,24 @@ class QuotesTest(unittest.TestCase):
         quotes = wikiquote.quotes('The Matrix (film)')
         self.assertTrue(len(quotes) > 0)
 
-    def test_lang_quotes(self):
+    def test_french_quotes(self):
         quotes = wikiquote.quotes('Matrix', lang='fr')
+        self.assertTrue(len(quotes) > 0)
+
+    def test_spanish_quotes(self):
+        quotes = wikiquote.quotes('The Matrix', lang='es')
         self.assertTrue(len(quotes) > 0)
 
     def test_max_quotes(self):
         quotes = wikiquote.quotes('The Matrix (film)', max_quotes = 8)
         self.assertEqual(len(quotes), 8)
 
-    def test_max_quotes_and_lang(self):
+    def test_max_quotes_and_french(self):
         quotes = wikiquote.quotes('Matrix', lang='fr', max_quotes = 8)
+        self.assertEqual(len(quotes), 8)
+
+    def test_max_quotes_and_spanish(self):
+        quotes = wikiquote.quotes('The Matrix', lang='es', max_quotes = 8)
         self.assertEqual(len(quotes), 8)
 
     def test_is_cast_credit(self):
