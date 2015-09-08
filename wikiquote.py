@@ -29,7 +29,7 @@ MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
 DEFAULT_MAX_QUOTES = 20
 WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:']
-SUPPORTED_LANGUAGES = ['en', 'fr']
+SUPPORTED_LANGUAGES = ['en', 'fr', 'es']
 
 
 def json_from_url(url):
@@ -49,6 +49,7 @@ def category_members(category, command='subcat', lang='en'):
     if command not in ['subcat', 'page']:
         raise ValueError('Unknown command {}'.format(command))
     category = urllib.parse.quote(category)
+    print(category)
     page = CTGRY_MMBRS_URL.format(lang=lang,
                                   cmcontinue='{cmcontinue}',
                                   page=category,
@@ -117,8 +118,6 @@ def is_quote(txt):
 def extract_quotes(html_content, max_quotes):
     tree = lxml.html.fromstring(html_content)
     quotes_list = []
-
-    # List items inside unordered lists
     node_list = tree.xpath('//div/ul/li')
 
     # Description tags inside description lists,
@@ -161,6 +160,24 @@ def extract_quotes_fr(html_content, max_quotes):
     return quotes
 
 
+def extract_quotes_es(html_content, max_quotes):
+    '''Extract quotes from the spanish wiki
+
+    Keyword arguments:
+    html_content -- the data returned by the wikiquote api
+    max_quote -- max number of quotes to retrieve
+    '''
+    # List items inside unordered lists
+    tree = lxml.html.fromstring(html_content)
+    node_list = tree.xpath('../div/ul/li')
+    for li in node_list:
+        uls = li.xpath('ul')
+        for ul in uls:
+            ul.getparent().remove(ul)
+    quotes = list(islice((li.text_content().strip() for li in node_list), max_quotes))
+    return quotes
+
+
 def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang='en'):
     if lang not in SUPPORTED_LANGUAGES:
         raise UnsupportedLanguageException('Unsupported language ' + lang)
@@ -176,6 +193,8 @@ def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang='en'):
     html_content = data['parse']['text']['*']
     if lang == 'fr':
         return extract_quotes_fr(html_content, max_quotes)
+    if lang == 'es':
+        return extract_quotes_es(html_content, max_quotes)
     return extract_quotes(html_content, max_quotes)
 
 

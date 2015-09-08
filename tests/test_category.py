@@ -10,9 +10,15 @@ class CategoryTest(unittest.TestCase):
         subcats = wikiquote.category_members('Category:Action films')
         self.assertTrue(len(list(subcats)) > 0)
 
-    def test_lang(self):
+    def test_subcat_french(self):
         subcats = wikiquote.category_members('Catégorie:Kaamelott',
                                              lang='fr',
+                                             command='page')
+        self.assertTrue(len(list(subcats)) > 0)
+
+    def test_subcat_spanish(self):
+        subcats = wikiquote.category_members('Categoría:Alemanes',
+                                             lang='es',
                                              command='page')
         self.assertTrue(len(list(subcats)) > 0)
 
