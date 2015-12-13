@@ -24,7 +24,7 @@ Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Pytho
 Some page titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception.  If the page does not exist, a `NoSuchPageException` will be raised instead.
 
 ## Tips
-Use `random.choice()` to select a random quote froma single page:
+Use `random.choice()` to select a random quote from a single page:
 ```python
 >>> import wikiquote, random
 
