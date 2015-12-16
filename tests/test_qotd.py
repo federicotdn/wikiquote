@@ -7,11 +7,18 @@ class QotdTest(unittest.TestCase):
     """
 
     def test_qotd_quote(self):
-        quote, author = wikiquote.quote_of_the_day()
-        self.assertIsInstance(quote, str)
-        self.assertTrue(len(quote) > 0)
+        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+            quote, author = wikiquote.quote_of_the_day(lang=lang)
+            self.assertIsInstance(quote, str)
+            self.assertTrue(len(quote) > 0)
+
+    def test_unsupported_lang(self):
+        self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
+                         wikiquote.quote_of_the_day,
+                         lang='hlhljopjpojkopijj')
 
     def test_qotd_author(self):
-        quote, author = wikiquote.quote_of_the_day()
-        self.assertIsInstance(author, str)
-        self.assertTrue(len(author) > 0)
+        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+            quote, author = wikiquote.quote_of_the_day()
+            self.assertIsInstance(author, str)
+            self.assertTrue(len(author) > 0)

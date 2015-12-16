@@ -6,5 +6,5 @@ install:
   - pip install pep8 lxml
 
 script:
-  - pep8 wikiquote.py
-  - python3 -m unittest
+  - pep8 wikiquote
+  - python3 -m unittest -v

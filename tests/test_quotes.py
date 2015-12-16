@@ -7,28 +7,25 @@ class QuotesTest(unittest.TestCase):
     """
 
     def test_disambiguation(self):
-        self.assertRaises(wikiquote.DisambiguationPageException,
+        self.assertRaises(wikiquote.utils.DisambiguationPageException,
                           wikiquote.quotes,
                           'Matrix')
 
     def test_no_such_page(self):
-        self.assertRaises(wikiquote.NoSuchPageException,
+        self.assertRaises(wikiquote.utils.NoSuchPageException,
                           wikiquote.quotes,
                           'aaksejhfkasehfksdfsa')
 
-    def unsupported_lang(self):
-        self.assertRaise(wikiquote.UnsupportedLanguageException,
-                         wikiquotes.quotes,
+    def test_unsupported_lang(self):
+        self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
+                         wikiquote.quotes,
                          'Matrix',
                          lang='hlhljopjpojkopijj')
 
     def test_normal_quotes(self):
-        quotes = wikiquote.quotes('The Matrix (film)')
-        self.assertTrue(len(quotes) > 0)
-
-    def test_lang_quotes(self):
-        quotes = wikiquote.quotes('Matrix', lang='fr')
-        self.assertTrue(len(quotes) > 0)
+        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+            quotes = wikiquote.quotes('Barack Obama', lang=lang)
+            self.assertTrue(len(quotes) > 0)
 
     def test_max_quotes(self):
         quotes = wikiquote.quotes('The Matrix (film)', max_quotes = 8)
@@ -37,10 +34,3 @@ class QuotesTest(unittest.TestCase):
     def test_max_quotes_and_lang(self):
         quotes = wikiquote.quotes('Matrix', lang='fr', max_quotes = 8)
         self.assertEqual(len(quotes), 8)
-
-    def test_is_cast_credit(self):
-      cast1 = 'Bryan Cranston - Walter White'.split()
-      cast2 = 'Giancarlo Esposito - Gustavo "Gus" Fring'.split()
-
-      self.assertTrue(wikiquote.is_cast_credit(cast1))
-      self.assertTrue(wikiquote.is_cast_credit(cast2))

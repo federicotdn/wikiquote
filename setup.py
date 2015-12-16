@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
   name = 'wikiquote',
-  py_modules = ['wikiquote'],
+  packages = ['wikiquote', 'wikiquote.langs'],
   version = '0.1.2',
   description = 'Retrieve quotes from any Wikiquote page.',
   author = 'Federico Tedin',
