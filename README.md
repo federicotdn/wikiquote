@@ -19,6 +19,9 @@ Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Pytho
 >>> wikiquote.quote_of_the_day() # returns a (quote, author) tuple
 # 'Always forgive your enemies; nothing annoys them so much.', 'Oscar Wilde'
 
+>>> wikiquote.supported_languages()
+# ['en', 'fr']
+
 ```
 
 Some page titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception.  If the page does not exist, a `NoSuchPageException` will be raised instead.
@@ -42,18 +45,19 @@ The `wikiquote` module currently works for the English and French versions of Wi
 
 >>> wikiquote.quotes('Dune', lang='fr')[0]
 # ['Si les vœux étaient des poissons, nous lancerions tous des filets.']
-```
 
-The `quote_of_the_day()` function will only return quotes in English.
+>>> wikiquote.quote_of_the_day(lang='fr')
+# '50 pour cent de toutes les éditions faites sur Wikipédia sont réalisées par seulement 0,7% des utilisateurs', 'Jimmy Wales'
+```
 
 ## Developing / Testing
 Check that all tests pass:
 ```bash
 $ python3 -m unittest -v
 ```
-Check that `wikiquote.py` follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
+Check that the `wikiquote` package follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
 ```bash
-$ pep8 wikiquote.py
+$ pep8 wikiquote
 ```
 
 ## TODO
