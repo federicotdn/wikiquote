@@ -44,7 +44,7 @@ The `wikiquote` module currently works for the English and French versions of Wi
 # ['Dune', 'Les Enfants de Dune', 'Les Hérétiques de Dune', 'Le Messie de Dune']
 
 >>> wikiquote.quotes('Dune', lang='fr')[0]
-# ['Si les vœux étaient des poissons, nous lancerions tous des filets.']
+# 'Si les vœux étaient des poissons, nous lancerions tous des filets.'
 
 >>> wikiquote.quote_of_the_day(lang='fr')
 # '50 pour cent de toutes les éditions faites sur Wikipédia sont réalisées par seulement 0,7% des utilisateurs', 'Jimmy Wales'

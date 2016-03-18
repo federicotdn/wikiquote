@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'wikiquote',
   packages = ['wikiquote', 'wikiquote.langs'],
-  version = '0.1.2',
+  version = '0.1.3',
   description = 'Retrieve quotes from any Wikiquote page.',
   author = 'Federico Tedin',
   author_email = 'federicotedin@gmail.com',
