@@ -1,7 +1,7 @@
 from itertools import islice
 
 
-MAIN_PAGE = "Accueil"
+MAIN_PAGE = "Wikiquote:Accueil"
 
 
 def extract_quotes(tree, max_quotes):
