@@ -19,6 +19,9 @@ Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Pytho
 >>> wikiquote.quote_of_the_day() # returns a (quote, author) tuple
 # 'Always forgive your enemies; nothing annoys them so much.', 'Oscar Wilde'
 
+>>> wikiquote.random_titles(max_titles = 3) # max_titles defaults to 20
+# ['Dune', 'Johannes Kepler', 'Rosa Parks']
+
 >>> wikiquote.supported_languages()
 # ['en', 'fr']
 

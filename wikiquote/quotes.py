@@ -24,6 +24,17 @@ def search(s, lang='en'):
     return results
 
 
+def random_titles(lang='en', max_titles=20):
+    if lang not in langs.SUPPORTED_LANGUAGES:
+        raise utils.UnsupportedLanguageException(
+            'Unsupported language: ' + lang)
+
+    local_random_url = utils.RANDOM_URL.format(lang=lang, limit=max_titles)
+    data = utils.json_from_url(local_random_url)
+    results = [entry['title'] for entry in data['query']['random']]
+    return results
+
+
 def quotes(page_title, max_quotes=utils.DEFAULT_MAX_QUOTES, lang='en'):
     if lang not in langs.SUPPORTED_LANGUAGES:
         raise utils.UnsupportedLanguageException(
