@@ -33,6 +33,11 @@ def is_quote(txt):
 def extract_quotes(tree, max_quotes):
     quotes_list = []
 
+    # Remove table of contents
+    toc_list = tree.xpath('//div[@id="toc"]')
+    for toc in toc_list:
+        toc.getparent().remove(toc)
+
     # List items inside unordered lists
     node_list = tree.xpath('//div/ul/li')
 
