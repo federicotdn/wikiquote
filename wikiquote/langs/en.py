@@ -14,8 +14,8 @@ def is_cast_credit(txt_split):
         return False
 
     separators = ['as', '-', '–']
-    return all([w[0].isupper() or w in separators or w[0] == '"'
-               for w in txt_split])
+    return all(w[0].isupper() or w in separators or w[0] == '"'
+               for w in txt_split)
 
 
 def is_quote(txt):
@@ -23,7 +23,7 @@ def is_quote(txt):
     invalid_conditions = [
         not txt or not txt[0].isupper() or len(txt) < MIN_QUOTE_LEN,
         len(txt_split) < MIN_QUOTE_WORDS,
-        any([True for word in txt_split if word in WORD_BLACKLIST]),
+        any(True for word in txt_split if word in WORD_BLACKLIST),
         txt.endswith(('(', ':', ']')),
         is_cast_credit(txt_split)
     ]
