@@ -1,3 +1,5 @@
+import lxml.etree
+
 WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:']
 MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
@@ -30,6 +32,30 @@ def is_quote(txt):
     return not any(invalid_conditions)
 
 
+def is_quote_node(node):
+    # Discard nodes with the <small> tag
+    if node.find('small') is not None:
+        return False
+
+    # Discard nodes that are just a link
+    # (using xpath so lxml will show text nodes)
+    # The link may be inside <i> or <b> tags, so keep peeling layers
+    suspect_node = node
+    while True:
+        node_children = suspect_node.xpath('child::node()')
+        if len(node_children) != 1:
+            break
+
+        suspect_node = node_children[0]
+        if not isinstance(suspect_node, lxml.etree._Element):
+            break
+
+        if suspect_node.tag == 'a':
+            return False
+
+    return True
+
+
 def extract_quotes(tree, max_quotes):
     quotes_list = []
 
@@ -51,6 +77,9 @@ def extract_quotes(tree, max_quotes):
         uls = node.xpath('ul')
         for ul in uls:
             ul.getparent().remove(ul)
+
+        if not is_quote_node(node):
+            continue
 
         txt = node.text_content().strip()
         if is_quote(txt) and max_quotes > len(quotes_list):
