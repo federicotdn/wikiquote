@@ -6,18 +6,6 @@ MIN_QUOTE_WORDS = 3
 MAIN_PAGE = "Main Page"
 
 
-def is_cast_credit(txt_split):
-    # Checks to see if the text is a cast credit:
-    #   <actor name> as <character name>
-    #   <actor name> - <character name>
-    if not 2 < len(txt_split) < 7:
-        return False
-
-    separators = ['as', '-', '–']
-    return all(w[0].isupper() or w in separators or w[0] == '"'
-               for w in txt_split)
-
-
 def is_quote(txt):
     txt_split = txt.split()
     invalid_conditions = [
@@ -25,7 +13,6 @@ def is_quote(txt):
         len(txt_split) < MIN_QUOTE_WORDS,
         any(True for word in txt_split if word in WORD_BLACKLIST),
         txt.endswith(('(', ':', ']')),
-        is_cast_credit(txt_split)
     ]
 
     # Returns false if any invalid conditions are true, otherwise returns True.
@@ -64,16 +51,29 @@ def extract_quotes(tree, max_quotes):
     for toc in toc_list:
         toc.getparent().remove(toc)
 
-    # List items inside unordered lists
-    node_list = tree.xpath('//div/ul/li')
+    # Scan list items description tags inside description lists.
+    # Also grab headlines to skip some sections.
+    node_list = tree.xpath('//div/ul/li|//div/dl/dd|//h2')
 
-    # Description tags inside description lists,
-    # first one is generally not a quote
-    dd_list = tree.xpath('//div/dl/dd')[1:]
-    if len(dd_list) > len(node_list):
-        node_list += dd_list
+    # Skip all quotes above the first heading
+    skip_to_next_heading = True
 
     for node in node_list:
+        if node.tag != 'h2' and skip_to_next_heading:
+            continue
+
+        if node.tag == 'h2':
+            skip_to_next_heading = False
+            heading_text = node.text_content().lower()
+
+            # Commence skipping
+            if heading_text in ('cast', 'see also', 'external links'):
+                skip_to_next_heading = True
+
+            continue
+
+        # Handle li/dd
+
         uls = node.xpath('ul')
         for ul in uls:
             ul.getparent().remove(ul)
