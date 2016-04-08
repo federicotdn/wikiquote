@@ -42,12 +42,12 @@ def extract_quotes(tree, max_quotes):
     if len(dd_list) > len(node_list):
         node_list += dd_list
 
-    for txt in node_list:
-        uls = txt.xpath('ul')
+    for node in node_list:
+        uls = node.xpath('ul')
         for ul in uls:
             ul.getparent().remove(ul)
 
-        txt = txt.text_content().strip()
+        txt = node.text_content().strip()
         if is_quote(txt) and max_quotes > len(quotes_list):
             txt_normal = ' '.join(txt.split())
             quotes_list.append(txt_normal)
