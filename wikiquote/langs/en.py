@@ -53,7 +53,7 @@ def extract_quotes(tree, max_quotes):
 
     # Scan list items description tags inside description lists.
     # Also grab headlines to skip some sections.
-    node_list = tree.xpath('//div/ul/li|//div/dl/dd|//h2')
+    node_list = tree.xpath('//div/ul/li|//div/dl|//h2')
 
     # Skip all quotes above the first heading
     skip_to_next_heading = True
@@ -72,8 +72,24 @@ def extract_quotes(tree, max_quotes):
 
             continue
 
-        # Handle li/dd
+        # <dl>'s are assumed to be multi-line dialogue
+        if node.tag == 'dl':
+            dds = node.xpath('dd')
 
+            if not all(is_quote_node(dd) for dd in dds):
+                continue
+
+            full_dialogue = '\n'.join(
+                dd.text_content().strip()
+                for dd in dds)
+            quotes_list.append(full_dialogue)
+
+            if max_quotes == len(quotes_list):
+                break
+
+            continue
+
+        # Handle <li>'s
         uls = node.xpath('ul')
         for ul in uls:
             ul.getparent().remove(ul)
