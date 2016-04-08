@@ -12,5 +12,8 @@ setup(
   download_url = 'https://github.com/federicotdn/python-wikiquotes/tarball/0.1.2',
   keywords = ['quotes', 'wikiquote', 'python', 'api', 'qotd'],
   license = 'MIT',
-  classifiers = [],
+  classifiers = [
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.4',
+  ],
 )
