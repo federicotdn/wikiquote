@@ -39,7 +39,7 @@ Use `random.choice()` to select a random quote from a single page:
 ```
 
 ## Languages
-The `wikiquote` module currently works for the English and French versions of Wikiquote.org.  Use the `lang` parameter to specify the language: `en` or `fr` (defaults to `en`).
+The `wikiquote` module currently works for the English, Spanish and French versions of Wikiquote.org.  Use the `lang` parameter to specify the language: `en`, `es`, or `fr` (defaults to `en`).
 ```python
 >>> import wikiquote
 
@@ -51,6 +51,13 @@ The `wikiquote` module currently works for the English and French versions of Wi
 
 >>> wikiquote.quote_of_the_day(lang='fr')
 # '50 pour cent de toutes les éditions faites sur Wikipédia sont réalisées par seulement 0,7% des utilisateurs', 'Jimmy Wales'
+
+>>> wikiquote.quotes('Nueve reinas', lang='es')[0]
+# 'Más ofendido estás... menos sospechoso pareces.'
+
+>>> wikiquote.quote_of_the_day(lang='es')
+# 'El universo no fue hecho a medida del hombre; tampoco le es hostil: es indiferente.', 'Carl Edward Sagan'
+
 ```
 
 ## Developing / Testing
