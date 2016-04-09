@@ -7,4 +7,5 @@ wikiquote/quotes.py
 wikiquote/utils.py
 wikiquote/langs/__init__.py
 wikiquote/langs/en.py
+wikiquote/langs/es.py
 wikiquote/langs/fr.py

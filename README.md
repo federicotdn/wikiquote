@@ -23,7 +23,7 @@ Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Pytho
 # ['Dune', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['en', 'fr']
+# ['en', 'es', 'fr']
 
 ```
 
