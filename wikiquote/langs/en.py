@@ -1,6 +1,6 @@
 import lxml.etree
 
-WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:']
+WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:', 'article:']
 MIN_QUOTE_LEN = 6
 MIN_QUOTE_WORDS = 3
 MAIN_PAGE = "Main Page"
@@ -82,7 +82,9 @@ def extract_quotes(tree, max_quotes):
             full_dialogue = '\n'.join(
                 dd.text_content().strip()
                 for dd in dds)
-            quotes_list.append(full_dialogue)
+
+            if is_quote(full_dialogue):
+                quotes_list.append(full_dialogue)
 
             if max_quotes == len(quotes_list):
                 break
