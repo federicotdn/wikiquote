@@ -1,5 +1,3 @@
-import urllib.request
-import urllib.parse
 import json
 
 
@@ -26,8 +24,14 @@ DEFAULT_MAX_QUOTES = 20
 
 
 def json_from_url(url, params=None):
+    try:
+        from urllib.request import urlopen as Urlopen
+        from urllib.parse import quote as Quote
+    except ImportError:
+        from urllib import pathname2url as Quote
+        from urllib2 import urlopen as Urlopen
     if params:
-        url += urllib.parse.quote(params)
-    res = urllib.request.urlopen(url)
+        url += Quote(params)
+    res = Urlopen(url)
     body = res.read().decode()
     return json.loads(body)
