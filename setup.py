@@ -7,7 +7,6 @@ setup(
   description = 'Retrieve quotes from any Wikiquote page.',
   author = 'Federico Tedin',
   author_email = 'federicotedin@gmail.com',
-  install_requires = ['lxml'],
   url = 'https://github.com/federicotdn/python-wikiquotes',
   download_url = 'https://github.com/federicotdn/python-wikiquotes/archive/0.1.5.tar.gz',
   keywords = ['quotes', 'wikiquote', 'python', 'api', 'qotd'],

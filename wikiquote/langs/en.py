@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import lxml.etree
 
 WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:', 'article:']
