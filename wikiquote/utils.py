@@ -35,4 +35,3 @@ def json_from_url(url, params=None):
     res = Urlopen(url)
     body = res.read().decode()
     return json.loads(body)
-    

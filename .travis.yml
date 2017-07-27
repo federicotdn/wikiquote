@@ -3,8 +3,7 @@ python:
   - "3.4"
 
 install:
-  - pip install pep8 lxml
+  - pip install lxml
 
 script:
-  - pep8 wikiquote
   - python3 -m unittest -v
