@@ -1,3 +1,4 @@
+# coding=utf-8
 import lxml.etree
 
 MAIN_PAGE = "Portada"
