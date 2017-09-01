@@ -1,7 +1,14 @@
-import urllib.request
-import urllib.parse
 import json
+import sys
 
+if sys.version_info.major >= 3:
+    import urllib.request as request
+    import urllib.parse as parser
+    from urllib.parse import quote
+else:
+    import urllib2 as request
+    import urlparse as parser
+    from urllib2 import quote
 
 class NoSuchPageException(Exception):
     pass
@@ -27,7 +34,7 @@ DEFAULT_MAX_QUOTES = 20
 
 def json_from_url(url, params=None):
     if params:
-        url += urllib.parse.quote(params)
-    res = urllib.request.urlopen(url)
+        url += quote(params)
+    res = request.urlopen(url)
     body = res.read().decode()
     return json.loads(body)
