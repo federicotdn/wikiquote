@@ -3,7 +3,7 @@
 ![License](http://img.shields.io/pypi/l/wikiquote.svg?style=flat)
 [![Version](http://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 
-Retrieve quotes from any Wikiquote.org page, or the quote of the day, with Python 3 (inspired by the `wikipedia` module).  Uses the `lxml` module to parse HTML.  Quotes are not always found correctly because of Wikiquote's varying page layouts.  Contributions are welcome.
+The `wikiquote` Python module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML page layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes/blob/master/README.md#developing) section below. 
 
 ## Usage
 ```python
@@ -59,15 +59,16 @@ The `wikiquote` module currently works for the English, Spanish and French versi
 
 ```
 
-## Developing / Testing
-Check that all tests pass:
+## Developing
+First, check that all tests pass:
 ```bash
 $ python3 -m unittest -v
 ```
-Check that the `wikiquote` package follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
+After that, check that the `wikiquote` package follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
 ```bash
 $ pep8 wikiquote
 ```
+Finally, create a pull request stating your changes.
 
 ## TODO
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
