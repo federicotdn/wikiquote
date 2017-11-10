@@ -1,6 +1,5 @@
 from itertools import islice
 
-
 MAIN_PAGE = "Wikiquote:Accueil"
 
 

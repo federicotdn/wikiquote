@@ -1,5 +1,4 @@
 import lxml.html
-
 from . import utils
 from . import langs
 
