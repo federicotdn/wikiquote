@@ -33,7 +33,7 @@ def json_from_url(url, params=None):
     if params:
         url += urllib.parse.quote(params)
     res = urllib.request.urlopen(url)
-    body = res.read().decode()
+    body = res.read().decode('utf-8')
     return json.loads(body)
 
 
