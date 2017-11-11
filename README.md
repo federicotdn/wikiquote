@@ -5,6 +5,12 @@
 
 The `wikiquote` Python module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML page layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes/blob/master/README.md#developing) section below. 
 
+## Installation
+You can install the `wikiquote` module using `pip`:
+```bash
+$ pip3 install --upgrade wikiquote
+```
+
 ## Usage
 ```python
 >>> import wikiquote
