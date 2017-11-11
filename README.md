@@ -22,7 +22,7 @@ The `wikiquote` Python module allows you to search and retrieve quotes from any 
 # ['Dune', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['en', 'es', 'fr']
+# ['de', 'en', 'es', 'fr']
 
 ```
 
@@ -38,7 +38,7 @@ Use `random.choice()` to select a random quote from a single page:
 ```
 
 ## Languages
-The `wikiquote` module currently works for the English, Spanish and French versions of Wikiquote.org.  Use the `lang` parameter to specify the language: `en`, `es`, or `fr` (defaults to `en`).
+The `wikiquote` module currently works for the English, Spanish, German and French versions of Wikiquote.org.  Use the `lang` parameter to specify the language: `en`, `es`, `de` or `fr` (defaults to `en`).
 ```python
 >>> import wikiquote
 
@@ -57,6 +57,9 @@ The `wikiquote` module currently works for the English, Spanish and French versi
 >>> wikiquote.quote_of_the_day(lang='es')
 # 'El universo no fue hecho a medida del hombre; tampoco le es hostil: es indiferente.', 'Carl Edward Sagan'
 
+>>> wikiquote.quotes('Hermann Hesse', lang='de')[0]
+# 'Nun, aller höhere Humor fängt damit an, daß man die eigene Person nicht mehr ernst nimmt.'
+
 ```
 
 ## Developing
@@ -74,3 +77,5 @@ Finally, create a pull request stating your changes.
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
 - Add more/better tests.
 - Add support for more languages: each language may require a different scrapping method.
+- Update Travis CI config.
+- Replace `pep8` for `pycodestyle`.
