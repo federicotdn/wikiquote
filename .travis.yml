@@ -1,10 +1,10 @@
 language: python
 python:
-  - "3.4"
+  - "3.6"
 
 install:
-  - pip install pep8 lxml
+  - pip install pycodestyle lxml
 
 script:
-  - pep8 wikiquote
+  - pycodestyle wikiquote
   - python3 -m unittest -v

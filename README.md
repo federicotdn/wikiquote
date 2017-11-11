@@ -67,9 +67,9 @@ First, check that all tests pass:
 ```bash
 $ python3 -m unittest -v
 ```
-After that, check that the `wikiquote` package follows the PEP8 conventions ([pep8](https://github.com/jcrocholl/pep8) required):
+After that, check that the `wikiquote` package follows the PEP 8 conventions ([pycodestyle](https://github.com/PyCQA/pycodestyle) required):
 ```bash
-$ pep8 wikiquote
+$ pycodestyle wikiquote
 ```
 Finally, create a pull request stating your changes.
 
@@ -77,5 +77,3 @@ Finally, create a pull request stating your changes.
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
 - Add more/better tests.
 - Add support for more languages: each language may require a different scrapping method.
-- Update Travis CI config.
-- Replace `pep8` for `pycodestyle`.

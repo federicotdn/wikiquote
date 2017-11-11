@@ -4,6 +4,6 @@ from . import langs
 
 
 def supported_languages():
-    l = langs.SUPPORTED_LANGUAGES[:]
-    l.sort()
-    return l
+    languages = langs.SUPPORTED_LANGUAGES[:]
+    languages.sort()
+    return languages
