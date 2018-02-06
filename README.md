@@ -3,7 +3,7 @@
 ![License](http://img.shields.io/pypi/l/wikiquote.svg?style=flat)
 [![Version](http://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 
-The `wikiquote` Python module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML page layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes/blob/master/README.md#developing) section below. 
+The `wikiquote` Python module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML page layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
 
 ## Installation
 You can install the `wikiquote` module using `pip`:
@@ -25,7 +25,7 @@ $ pip3 install --upgrade wikiquote
 # 'Always forgive your enemies; nothing annoys them so much.', 'Oscar Wilde'
 
 >>> wikiquote.random_titles(max_titles = 3) # max_titles defaults to 20
-# ['Dune', 'Johannes Kepler', 'Rosa Parks']
+# ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
 # ['de', 'en', 'es', 'fr']
