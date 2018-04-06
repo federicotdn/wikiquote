@@ -44,7 +44,16 @@ Use `random.choice()` to select a random quote from a single page:
 ```
 
 ## Languages
-The `wikiquote` module currently works for the English, Spanish, German and French versions of Wikiquote.org.  Use the `lang` parameter to specify the language: `en`, `es`, `de` or `fr` (defaults to `en`).
+The `wikiquote` module currently supports the following languages:
+
+| Language | ISO 639-1 Code |
+|----------|----------------|
+| English  | `en`           |
+| Spanish  | `es`           |
+| German   | `de`           |
+| French   | `fr`           |
+
+Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
 >>> import wikiquote
 
