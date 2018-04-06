@@ -1,6 +1,8 @@
 import lxml.html
+
 from . import utils
 from . import langs
+from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES
 
 
 def _is_disambiguation(categories):
@@ -10,7 +12,7 @@ def _is_disambiguation(categories):
     ])
 
 
-def search(s, lang='en'):
+def search(s, lang=DEFAULT_LANG):
     if lang not in langs.SUPPORTED_LANGUAGES:
         raise utils.UnsupportedLanguageException(
             'Unsupported language: ' + lang)
@@ -24,7 +26,7 @@ def search(s, lang='en'):
     return results
 
 
-def random_titles(lang='en', max_titles=20):
+def random_titles(lang=DEFAULT_LANG, max_titles=DEFAULT_MAX_QUOTES):
     if lang not in langs.SUPPORTED_LANGUAGES:
         raise utils.UnsupportedLanguageException(
             'Unsupported language: ' + lang)
@@ -35,7 +37,7 @@ def random_titles(lang='en', max_titles=20):
     return results
 
 
-def quotes(page_title, max_quotes=utils.DEFAULT_MAX_QUOTES, lang='en'):
+def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang=DEFAULT_LANG):
     if lang not in langs.SUPPORTED_LANGUAGES:
         raise utils.UnsupportedLanguageException(
             'Unsupported language: ' + lang)

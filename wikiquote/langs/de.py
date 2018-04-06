@@ -1,5 +1,6 @@
 import lxml.etree
 import re
+
 from .. import utils
 
 WORD_BLACKLIST = []

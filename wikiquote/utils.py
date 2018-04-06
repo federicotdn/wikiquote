@@ -3,8 +3,7 @@ import urllib.parse
 import json
 import lxml
 
-MIN_QUOTE_LEN = 6
-MIN_QUOTE_WORDS = 3
+from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
 
 
 class NoSuchPageException(Exception):
@@ -26,7 +25,6 @@ RANDOM_URL = W_URL + \
 PAGE_URL = W_URL + '?format=json&action=parse&prop=text|categories&' \
     'disableeditsection&page='
 MAINPAGE_URL = W_URL + '?format=json&action=parse&prop=text&page='
-DEFAULT_MAX_QUOTES = 20
 
 
 def json_from_url(url, params=None):

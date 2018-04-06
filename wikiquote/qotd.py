@@ -1,9 +1,11 @@
 import lxml.html
+
 from . import utils
 from . import langs
+from .constants import DEFAULT_LANG
 
 
-def quote_of_the_day(lang='en'):
+def quote_of_the_day(lang=DEFAULT_LANG):
     if lang not in langs.SUPPORTED_LANGUAGES:
         raise utils.UnsupportedLanguageException(
             'Unsupported language: ' + lang)
