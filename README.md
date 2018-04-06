@@ -28,20 +28,11 @@ $ pip3 install --upgrade wikiquote
 # ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['de', 'en', 'es', 'fr']
+# ['de', 'en', 'es', 'fr', 'it']
 
 ```
 
 Some page titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception.  If the page does not exist, a `NoSuchPageException` will be raised instead.
-
-## Tips
-Use `random.choice()` to select a random quote from a single page:
-```python
->>> import wikiquote, random
-
->>> random.choice(wikiquote.quotes('Linus Torvalds'))
-# 'WE DO NOT BREAK USERSPACE!'
-```
 
 ## Languages
 The `wikiquote` module currently supports the following languages:
@@ -52,6 +43,7 @@ The `wikiquote` module currently supports the following languages:
 | Spanish  | `es`           |
 | German   | `de`           |
 | French   | `fr`           |
+| Italian  | `it`           |
 
 Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
@@ -75,6 +67,17 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 >>> wikiquote.quotes('Hermann Hesse', lang='de')[0]
 # 'Nun, aller höhere Humor fängt damit an, daß man die eigene Person nicht mehr ernst nimmt.'
 
+>>> wikiquote.quote_of_the_day(lang='it')
+# "Siamo angeli con un'ala sola. Possiamo volare solo restando abbracciati.", 'Luciano De Crescenzo'
+```
+
+## Tips
+Use `random.choice()` to select a random quote from a single page:
+```python
+>>> import wikiquote, random
+
+>>> random.choice(wikiquote.quotes('Linus Torvalds'))
+# 'WE DO NOT BREAK USERSPACE!'
 ```
 
 ## Developing
