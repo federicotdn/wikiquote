@@ -12,17 +12,11 @@ def remove_i_tags(tree):
         i.getparent().remove(i)
 
 
-def remove_credit(quote):
-    if quote.endswith(('–', '-')):
-        quote = quote[:-1].rstrip()
-    return quote
-
-
 def extract_quotes(tree, max_quotes):
     remove_i_tags(tree)
 
     q_lst = utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
-    return [remove_credit(q) for q in q_lst]
+    return [utils.remove_credit(q) for q in q_lst]
 
 
 def qotd(html_tree):

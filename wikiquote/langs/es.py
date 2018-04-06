@@ -13,7 +13,7 @@ def extract_quotes(tree, max_quotes):
 def qotd(html_tree):
     tree = html_tree.get_element_by_id('mf-FDD')
 
-    quote_container = tree.xpath('div/table/tr')
+    quote_container = tree.xpath('div/table/tbody/tr')
     raw_quote = quote_container[0].text_content().split('~')
     quote = raw_quote[0].strip()
 

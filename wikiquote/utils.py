@@ -44,16 +44,23 @@ def clean_txt(txt):
     return txt.strip()
 
 
+def remove_credit(quote):
+    if quote.endswith(('–', '-')):
+        quote = quote[:-1].rstrip()
+    return quote
+
+
 def is_quote(txt, word_blacklist):
     txt_split = txt.split()
     invalid_conditions = [
-        not txt or not txt[0].isupper() or len(txt) < MIN_QUOTE_LEN,
+        txt and txt[0].isalpha() and txt[0].islower(),
+        len(txt) < MIN_QUOTE_LEN,
         len(txt_split) < MIN_QUOTE_WORDS,
         any(True for word in txt_split if word in word_blacklist),
         txt.endswith(('(', ':', ']')),
     ]
 
-    # Returns false if any invalid conditions are true, otherwise returns True.
+    # Returns False if any invalid conditions are True, otherwise returns True.
     return not any(invalid_conditions)
 
 
@@ -93,22 +100,23 @@ def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
 
     # Scan list items description tags inside description lists.
     # Also grab headlines to skip some sections.
-    node_list = tree.xpath('//div/ul/li|//div/dl|//h2')
+    node_list = tree.xpath('//div/ul/li|//div/dl|//h2|//h3')
 
     # Skip all quotes above the first heading
     skip_to_next_heading = True
 
     for node in node_list:
-        if node.tag != 'h2' and skip_to_next_heading:
+        if node.tag not in ['h2', 'h3'] and skip_to_next_heading:
             continue
 
-        if node.tag == 'h2':
+        if node.tag in ['h2', 'h3']:
             skip_to_next_heading = False
             heading_text = node.text_content().lower()
 
             # Commence skipping
-            if heading_text in headings:
-                skip_to_next_heading = True
+            for unwanted_heading in headings:
+                if heading_text.startswith(unwanted_heading.lower()):
+                    skip_to_next_heading = True
 
             continue
 
