@@ -38,9 +38,12 @@ def json_from_url(url, params=None):
 
 
 def clean_txt(txt):
+    # Remove unwanted characters
     to_remove = '«»"'
     for ch in to_remove:
         txt = txt.replace(ch, '')
+
+    # Remove leading and trailing newlines
     return txt.strip()
 
 
@@ -90,7 +93,7 @@ def is_quote_node(node):
 
 def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
     # Check for quotes inside list items and description lists
-    # This function works well for EN and ES versions of Wikiquote articles
+    # This function works well for EN, DE and ES versions of Wikiquote articles
     quotes_list = []
 
     # Remove table of contents
@@ -98,7 +101,7 @@ def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
     for toc in toc_list:
         toc.getparent().remove(toc)
 
-    # Scan list items description tags inside description lists.
+    # Scan for list items and description list tags
     # Also grab headlines to skip some sections.
     node_list = tree.xpath('//div/ul/li|//div/dl|//h2|//h3')
 
@@ -120,8 +123,10 @@ def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
 
             continue
 
-        # <dl>'s are assumed to be multi-line dialogue
+        potential_quote = None
+
         if node.tag == 'dl':
+            # <dl>'s are assumed to be multi-line dialogue
             dds = node.xpath('dd')
 
             if not all(is_quote_node(dd) for dd in dds):
@@ -130,29 +135,22 @@ def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
             full_dialogue = '\n'.join(
                 dd.text_content().strip()
                 for dd in dds)
-            full_dialogue = clean_txt(full_dialogue)
-            if is_quote(full_dialogue, word_blacklist):
-                quotes_list.append(full_dialogue)
 
-            if max_quotes == len(quotes_list):
-                break
+            potential_quote = clean_txt(full_dialogue)
+        else:
+            # Handle <li>'s
+            uls = node.xpath('ul')
+            for ul in uls:
+                ul.getparent().remove(ul)
 
-            continue
+            if not is_quote_node(node):
+                continue
 
-        # Handle <li>'s
-        uls = node.xpath('ul')
-        for ul in uls:
-            ul.getparent().remove(ul)
+            txt = ' '.join(node.text_content().split())
+            potential_quote = clean_txt(txt)
 
-        if not is_quote_node(node):
-            continue
-
-        txt = node.text_content()
-        txt = clean_txt(txt)
-        if is_quote(txt, word_blacklist) and max_quotes > len(quotes_list):
-            txt_normal = ' '.join(txt.split())
-            quotes_list.append(txt_normal)
-
+        if potential_quote and is_quote(potential_quote, word_blacklist):
+            quotes_list.append(txt)
             if max_quotes == len(quotes_list):
                 break
 
