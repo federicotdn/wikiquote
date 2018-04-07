@@ -2,6 +2,7 @@
 setup.cfg
 setup.py
 wikiquote/__init__.py
+wikiquote/constants.py
 wikiquote/qotd.py
 wikiquote/quotes.py
 wikiquote/utils.py
@@ -10,3 +11,4 @@ wikiquote/langs/de.py
 wikiquote/langs/en.py
 wikiquote/langs/es.py
 wikiquote/langs/fr.py
+wikiquote/langs/it.py
