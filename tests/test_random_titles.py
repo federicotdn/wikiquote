@@ -1,6 +1,7 @@
 import wikiquote
 import unittest
 
+
 class SearchTest(unittest.TestCase):
     """
     Test wikiquote.random_titles()
@@ -13,5 +14,5 @@ class SearchTest(unittest.TestCase):
 
     def test_unsupported_lang(self):
         self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
-                         wikiquote.random_titles,
-                         lang='hlhljopjpojkopijj')
+                          wikiquote.random_titles,
+                          lang='foobar')

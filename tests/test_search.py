@@ -1,6 +1,7 @@
 import wikiquote
 import unittest
 
+
 class SearchTest(unittest.TestCase):
     """
     Test wikiquote.search()
@@ -13,9 +14,9 @@ class SearchTest(unittest.TestCase):
 
     def test_unsupported_lang(self):
         self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
-                         wikiquote.search,
-                         'Matrix',
-                         lang='hlhljopjpojkopijj')
+                          wikiquote.search,
+                          'Matrix',
+                          lang='foobar')
 
     def test_empty_search(self):
         results = wikiquote.search('')

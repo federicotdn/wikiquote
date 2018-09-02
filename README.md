@@ -87,11 +87,11 @@ $ python3 -m unittest -v
 ```
 After that, check that the `wikiquote` package follows the PEP 8 conventions ([pycodestyle](https://github.com/PyCQA/pycodestyle) required):
 ```bash
-$ pycodestyle wikiquote
+$ pycodestyle wikiquote tests
 ```
 Finally, create a pull request stating your changes.
 
 ## TODO
 - Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
-- Add more/better tests.
+- Add more/better tests (for example, check that returned quotes do not contain characters like '(' or ')').
 - Add support for more languages: each language may require a different scrapping method.

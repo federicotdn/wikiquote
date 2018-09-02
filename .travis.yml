@@ -6,5 +6,5 @@ install:
   - pip install pycodestyle lxml
 
 script:
-  - pycodestyle wikiquote
+  - pycodestyle wikiquote tests
   - python3 -m unittest -v

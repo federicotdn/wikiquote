@@ -2,6 +2,7 @@ import urllib.request
 import urllib.parse
 import json
 import lxml
+import re
 
 from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
 
@@ -37,11 +38,9 @@ def json_from_url(url, params=None):
 
 def clean_txt(txt):
     # Remove unwanted characters
-    to_remove = '«»"'
-    for ch in to_remove:
-        txt = txt.replace(ch, '')
+    txt = re.sub(r'«|»|"|“|”', '', txt)
 
-    # Remove leading and trailing newlines
+    # Remove leading and trailing newlines/quotes
     return txt.strip()
 
 
@@ -59,6 +58,7 @@ def is_quote(txt, word_blacklist):
         len(txt_split) < MIN_QUOTE_WORDS,
         any(True for word in txt_split if word in word_blacklist),
         txt.endswith(('(', ':', ']')),
+        txt.startswith(('(',))
     ]
 
     # Returns False if any invalid conditions are True, otherwise returns True.
@@ -148,7 +148,7 @@ def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
             potential_quote = clean_txt(txt)
 
         if potential_quote and is_quote(potential_quote, word_blacklist):
-            quotes_list.append(txt)
+            quotes_list.append(potential_quote)
             if max_quotes == len(quotes_list):
                 break
 

@@ -1,6 +1,7 @@
 import wikiquote
 import unittest
 
+
 class SupportedLangsTest(unittest.TestCase):
     """
     Test wikiquote.supported_languages()
