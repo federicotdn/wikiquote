@@ -22,7 +22,7 @@ def extract_quotes(tree, max_quotes):
 def qotd(html_tree):
     tree = html_tree.get_element_by_id('mf-ZitatdW')
     raw_text = tree.xpath('div')[1].text_content().strip()
-    raw_text = re.sub('.*?\((.*?)\)', '', raw_text)
+    raw_text = re.sub(r'\(.*?\)', '', raw_text)
 
     raw_quote = []
     for part in raw_text.split('\n'):

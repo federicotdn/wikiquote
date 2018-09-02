@@ -55,9 +55,6 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 >>> wikiquote.quotes('Dune', lang='fr')[0]
 # 'Si les vœux étaient des poissons, nous lancerions tous des filets.'
 
->>> wikiquote.quote_of_the_day(lang='fr')
-# '50 pour cent de toutes les éditions faites sur Wikipédia sont réalisées par seulement 0,7% des utilisateurs', 'Jimmy Wales'
-
 >>> wikiquote.quotes('Nueve reinas', lang='es')[0]
 # 'Más ofendido estás... menos sospechoso pareces.'
 
