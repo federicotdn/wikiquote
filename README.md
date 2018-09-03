@@ -77,6 +77,11 @@ Use `random.choice()` to select a random quote from a single page:
 # 'WE DO NOT BREAK USERSPACE!'
 ```
 
+## Caveats
+As mentioned in the introduction, `wikiquote` may fail to retrieve quotes from some pages. This is due to Wikiquote.org's varying internal page layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article.
+
+As of 2018/09/03, the French version of Wikiquote no longer provides a quote of the day. The `wikiquote` module raises an `UnsupportedLanguageException` when `quote_of_the_day` is called with `lang='fr'`.
+
 ## Developing
 First, check that all tests pass:
 ```bash
