@@ -1,5 +1,3 @@
-import lxml.etree
-
 from .. import utils
 
 WORD_BLACKLIST = ['quoted', 'Variant:', 'Retrieved', 'Notes:', 'article:']

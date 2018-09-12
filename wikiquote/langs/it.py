@@ -1,5 +1,3 @@
-import lxml.etree
-
 from .. import utils
 
 MAIN_PAGE = "Pagina_principale"

@@ -1,9 +1,9 @@
-# python-wikiquotes
-[![Build Status](https://travis-ci.org/federicotdn/python-wikiquotes.svg?branch=travis)](https://travis-ci.org/federicotdn/python-wikiquotes)
+# wikiquote
+[![Build Status](https://travis-ci.org/federicotdn/wikiquote.svg?branch=travis)](https://travis-ci.org/federicotdn/wikiquote)
 ![License](https://img.shields.io/pypi/l/wikiquote.svg?style=flat)
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 
-The `wikiquote` Python module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML page layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
+The `wikiquote` Python 3 module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
 
 ## Installation
 You can install the `wikiquote` module using `pip`:
@@ -32,7 +32,9 @@ $ pip3 install --upgrade wikiquote
 
 ```
 
-Some page titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception.  If the page does not exist, a `NoSuchPageException` will be raised instead.
+Some article titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception. When this happens, try using `search()` first, and then use one of the specific article titles found.
+
+If the article searched for does not exist, and no similar results exist, a `NoSuchPageException` will be raised instead.
 
 ## Languages
 The `wikiquote` module currently supports the following languages:
@@ -69,7 +71,7 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 ```
 
 ## Tips
-Use `random.choice()` to select a random quote from a single page:
+Use `random.choice()` to select a random quote from an article:
 ```python
 >>> import wikiquote, random
 
@@ -78,7 +80,7 @@ Use `random.choice()` to select a random quote from a single page:
 ```
 
 ## Caveats
-As mentioned in the introduction, `wikiquote` may fail to retrieve quotes from some pages. This is due to Wikiquote.org's varying internal page layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article.
+As mentioned in the introduction, `wikiquote` may fail to retrieve quotes from some articles. This is due to Wikiquote.org's varying internal article layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article.
 
 As of 2018/09/03, the French version of Wikiquote no longer provides a quote of the day. The `wikiquote` module raises an `UnsupportedLanguageException` when `quote_of_the_day` is called with `lang='fr'`.
 
@@ -94,6 +96,6 @@ $ pycodestyle wikiquote tests
 Finally, create a pull request stating your changes.
 
 ## TODO
-- Improve the way quotes are searched for in the HTML page, avoid returning things like external references, links or notes from quotes.
+- Improve the way quotes are searched for in the HTML articles, avoid returning things like external references, links or notes from quotes.
 - Add more/better tests (for example, check that returned quotes do not contain characters like '(' or ')').
 - Add support for more languages: each language may require a different scrapping method.

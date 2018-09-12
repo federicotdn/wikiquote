@@ -3,8 +3,8 @@ python:
   - "3.6"
 
 install:
-  - pip install pycodestyle lxml
+  - pip install -r requirements.txt -r requirements-dev.txt
 
 script:
-  - pycodestyle wikiquote tests
+  - flake8 wikiquote/ tests/
   - python3 -m unittest -v
