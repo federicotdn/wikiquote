@@ -11,8 +11,9 @@ def extract_quotes(tree, max_quotes):
 
 
 def qotd(html_tree):
-    # French QOTD not available
-    # TODO: Re-enable when QOTD appears again on welcome page
-    # Note added on 2018/09/02
-    raise utils.UnsupportedLanguageException(
-        'Quote of the day not available for lang="fr".')
+    tree = html_tree.get_element_by_id('mf-cdj')
+    tree = tree.xpath('div/div')[1].xpath('table/tbody/tr/td')[1]
+
+    quote = tree.xpath('div/i')[0].text_content()
+    author = tree.xpath('div/a')[0].text_content()
+    return quote, author

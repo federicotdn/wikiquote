@@ -9,10 +9,9 @@ class QotdTest(unittest.TestCase):
 
     def test_qotd_quote(self):
         for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
-            if lang != 'fr':
-                quote, author = wikiquote.quote_of_the_day(lang=lang)
-                self.assertIsInstance(quote, str)
-                self.assertTrue(len(quote) > 0)
+            quote, author = wikiquote.quote_of_the_day(lang=lang)
+            self.assertIsInstance(quote, str)
+            self.assertTrue(len(quote) > 0)
 
     def test_unsupported_lang(self):
         self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
@@ -21,13 +20,6 @@ class QotdTest(unittest.TestCase):
 
     def test_qotd_author(self):
         for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
-            if lang != 'fr':
-                quote, author = wikiquote.quote_of_the_day()
-                self.assertIsInstance(author, str)
-                self.assertTrue(len(author) > 0)
-
-    def test_french_qotd(self):
-        # See comment on fr.py:14
-        self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
-                          wikiquote.quote_of_the_day,
-                          'fr')
+            quote, author = wikiquote.quote_of_the_day()
+            self.assertIsInstance(author, str)
+            self.assertTrue(len(author) > 0)
