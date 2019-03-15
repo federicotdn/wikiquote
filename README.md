@@ -85,11 +85,12 @@ As mentioned in the introduction, `wikiquote` may fail to retrieve quotes from s
 ## Developing
 First, check that all tests pass:
 ```bash
-$ python3 -m unittest -v
+$ make test
 ```
-After that, check that the `wikiquote` package follows the PEP 8 conventions ([pycodestyle](https://github.com/PyCQA/pycodestyle) required):
+After that, check that the `wikiquote` package follows the PEP 8 conventions:
 ```bash
-$ pycodestyle wikiquote tests
+$ pip3 install -r requirements-dev.txt
+$ make codestyle
 ```
 Finally, create a pull request stating your changes.
 
