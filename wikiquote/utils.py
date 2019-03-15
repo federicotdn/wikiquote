@@ -40,6 +40,9 @@ def clean_txt(txt):
     # Remove unwanted characters
     txt = re.sub(r'«|»|"|“|”', '', txt)
 
+    # Remove non-breaking spaces
+    txt = txt.replace('\xa0', '')
+
     # Remove leading and trailing newlines/quotes
     return txt.strip()
 
