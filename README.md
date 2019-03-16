@@ -28,7 +28,7 @@ $ pip3 install --upgrade wikiquote
 # ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['de', 'en', 'es', 'fr', 'it']
+# ['de', 'en', 'es', 'fr', 'it', 'pl']
 
 ```
 
@@ -46,6 +46,7 @@ The `wikiquote` module currently supports the following languages:
 | German   | `de`           |
 | French   | `fr`           |
 | Italian  | `it`           |
+| Polish   | `pl`           |
 
 Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
@@ -68,6 +69,9 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 
 >>> wikiquote.quote_of_the_day(lang='it')
 # "Siamo angeli con un'ala sola. Possiamo volare solo restando abbracciati.", 'Luciano De Crescenzo'
+
+>>> wikiquote.quote_of_the_day(lang='pl')
+# 'Boże pomóż mi być takim człowiekiem, za jakiego uważa mnie mój pies.', 'Janusz Leon Wiśniewski'
 ```
 
 ## Tips

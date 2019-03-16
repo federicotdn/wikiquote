@@ -92,9 +92,11 @@ def is_quote_node(node):
     return True
 
 
-def extract_quotes_li(tree, max_quotes, headings, word_blacklist):
+def extract_quotes_li(tree, max_quotes, headings=None, word_blacklist=None):
     # Check for quotes inside list items and description lists
     # This function works well for EN, DE and ES versions of Wikiquote articles
+    headings = headings or []
+    word_blacklist = word_blacklist or []
     quotes_list = []
 
     # Remove table of contents
