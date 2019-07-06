@@ -8,7 +8,7 @@ class SearchTest(unittest.TestCase):
     """
 
     def test_random(self):
-        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+        for lang in wikiquote.supported_languages():
             results = wikiquote.random_titles(lang=lang, max_titles=20)
             self.assertTrue(len(results) == 20)
 

@@ -24,7 +24,7 @@ class QuotesTest(unittest.TestCase):
                           lang='foobar')
 
     def test_normal_quotes(self):
-        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+        for lang in wikiquote.supported_languages():
             quotes = wikiquote.quotes('Barack Obama', lang=lang)
             self.assertTrue(len(quotes) > 0)
 

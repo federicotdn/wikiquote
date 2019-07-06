@@ -8,7 +8,7 @@ class QotdTest(unittest.TestCase):
     """
 
     def test_qotd_quote(self):
-        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+        for lang in wikiquote.supported_languages():
             quote, author = wikiquote.quote_of_the_day(lang=lang)
             self.assertIsInstance(quote, str)
             self.assertTrue(len(quote) > 0)
@@ -19,7 +19,13 @@ class QotdTest(unittest.TestCase):
                           lang='foobar')
 
     def test_qotd_author(self):
-        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+        for lang in wikiquote.supported_languages():
             quote, author = wikiquote.quote_of_the_day()
             self.assertIsInstance(author, str)
             self.assertTrue(len(author) > 0)
+
+    def test_qotd_qotd(self):
+        self.assertEqual(
+            wikiquote.quote_of_the_day(),
+            wikiquote.qotd()
+        )

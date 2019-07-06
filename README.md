@@ -18,13 +18,15 @@ $ pip3 install --upgrade wikiquote
 >>> wikiquote.search('Dune')
 # ['Dune', 'Frank Herbert', 'Children of Dune (TV miniseries)', 'Dune (film)', 'Dune (TV miniseries)']
 
->>> wikiquote.quotes('Dune', max_quotes = 3) # max_quotes defaults to 20
+>>> wikiquote.quotes('Dune', max_quotes=3) # max_quotes defaults to 20
 # ['A popular man arouses the jealousy of the powerful.', 'Parting with friends is a sadness. A place is only a place.', 'Hope clouds observation.']
 
 >>> wikiquote.quote_of_the_day() # returns a (quote, author) tuple
 # 'Always forgive your enemies; nothing annoys them so much.', 'Oscar Wilde'
 
->>> wikiquote.random_titles(max_titles = 3) # max_titles defaults to 20
+>>> wikiquote.qotd() # same as quote_of_the_day()
+
+>>> wikiquote.random_titles(max_titles=3) # max_titles defaults to 20
 # ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
@@ -32,7 +34,7 @@ $ pip3 install --upgrade wikiquote
 
 ```
 
-Some article titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception. When this happens, try using `search()` first, and then use one of the specific article titles found.
+Some article titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception. Usually this happens because there are many articles matching the search term. When this happens, try using `search()` first, and then use one of the specific article titles found.
 
 If the article searched for does not exist, and no similar results exist, a `NoSuchPageException` will be raised instead.
 

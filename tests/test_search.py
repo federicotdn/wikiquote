@@ -8,7 +8,7 @@ class SearchTest(unittest.TestCase):
     """
 
     def test_search(self):
-        for lang in wikiquote.langs.SUPPORTED_LANGUAGES:
+        for lang in wikiquote.supported_languages():
             results = wikiquote.search('Matrix', lang=lang)
             self.assertTrue(len(results) > 0)
 
