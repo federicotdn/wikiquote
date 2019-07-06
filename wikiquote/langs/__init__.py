@@ -4,9 +4,11 @@ import importlib
 
 from .. import utils
 
-modules = glob.glob(os.path.dirname(__file__) + '/*.py')
-modules = [m for m in modules if not m.endswith('__init__.py')]
-modules = [os.path.basename(f)[:-3] for f in modules]
+modules = [
+    os.path.basename(m)[:-3]
+    for m in glob.glob(os.path.dirname(__file__) + '/*.py')
+    if not m.endswith('__init__.py')
+]
 
 lang_dict = {}
 
@@ -31,7 +33,8 @@ def extract_quotes_lang(lang, html_tree, max_quotes):
 
 def qotd_lang(lang, html_tree):
     check_lang(lang)
-    return lang_dict[lang].qotd(html_tree)
+    quote, author = lang_dict[lang].qotd(html_tree)
+    return quote, author.split(',')[0]
 
 
 def main_page_lang(lang):
