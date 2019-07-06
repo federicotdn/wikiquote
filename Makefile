@@ -6,8 +6,8 @@ manual_checks:
 test:
 	python3 -m unittest -v
 
-codestyle:
-	pycodestyle wikiquote tests
+flake8:
+	flake8 wikiquote tests
 
 package:
 	mkdir -p dist

@@ -94,7 +94,7 @@ $ make test
 After that, check that the `wikiquote` package follows the PEP 8 conventions:
 ```bash
 $ pip3 install -r requirements-dev.txt
-$ make codestyle
+$ make flake8
 ```
 Finally, create a pull request stating your changes.
 
