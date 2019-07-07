@@ -41,14 +41,15 @@ If the article searched for does not exist, and no similar results exist, a `NoS
 ## Languages
 The `wikiquote` module currently supports the following languages:
 
-| Language | ISO 639-1 Code |
-|----------|----------------|
-| English  | `en`           |
-| Spanish  | `es`           |
-| German   | `de`           |
-| French   | `fr`           |
-| Italian  | `it`           |
-| Polish   | `pl`           |
+| Language   | ISO 639-1 Code |
+|------------|----------------|
+| English    | `en`           |
+| Spanish    | `es`           |
+| German     | `de`           |
+| French     | `fr`           |
+| Italian    | `it`           |
+| Polish     | `pl`           |
+| Portuguese | `pt`           |
 
 Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
@@ -74,6 +75,9 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 
 >>> wikiquote.quote_of_the_day(lang='pl')
 # 'Boże pomóż mi być takim człowiekiem, za jakiego uważa mnie mój pies.', 'Janusz Leon Wiśniewski'
+
+>>> wikiquote.quotes('José Saramago', lang='pt')[0]
+# 'Nem a juventude sabe o que pode, nem a velhice pode o que sabe.'
 ```
 
 ## Tips

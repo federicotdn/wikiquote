@@ -16,3 +16,6 @@ package:
 
 upload: package
 	twine upload dist/*
+
+repl:
+	python -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'
