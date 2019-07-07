@@ -12,10 +12,10 @@ flake8:
 package:
 	mkdir -p dist
 	rm -rf dist/*
-	python setup.py sdist
+	python3 setup.py sdist
 
 upload: package
 	twine upload dist/*
 
 repl:
-	python -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'
+	python3 -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'

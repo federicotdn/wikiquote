@@ -1,6 +1,7 @@
 # wikiquote
 [![Build Status](https://travis-ci.org/federicotdn/wikiquote.svg?branch=travis)](https://travis-ci.org/federicotdn/wikiquote)
 ![License](https://img.shields.io/pypi/l/wikiquote.svg?style=flat)
+![](https://img.shields.io/badge/python-3-blue.svg)
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 
 The `wikiquote` Python 3 module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
