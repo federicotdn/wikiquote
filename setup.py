@@ -1,12 +1,12 @@
 from distutils.core import setup
 
-VERSION = '0.1.12'
+VERSION = '0.1.13'
 
 
 with open('requirements.txt') as f:
     requires = f.read().splitlines()
 
-with open('README.md') as f:
+with open('README.rst') as f:
     long_description = f.read()
 
 setup(
@@ -15,7 +15,6 @@ setup(
     version=VERSION,
     description='Retrieve quotes from any Wikiquote article.',
     long_description=long_description,
-    long_description_content_type='text/markdown',
     author='Federico Tedin',
     author_email='federicotedin@gmail.com',
     install_requires=requires,
