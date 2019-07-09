@@ -16,11 +16,11 @@ $ pip3 install --upgrade wikiquote
 ```python
 >>> import wikiquote
 
->>> wikiquote.search('Dune')
-# ['Dune', 'Frank Herbert', 'Children of Dune (TV miniseries)', 'Dune (film)', 'Dune (TV miniseries)']
+>>> wikiquote.search('The Matrix')
+# ['The Matrix (film)', 'The Matrix Revolutions', 'The Matrix Reloaded', 'The Animatrix']
 
->>> wikiquote.quotes('Dune', max_quotes=3) # max_quotes defaults to 20
-# ['A popular man arouses the jealousy of the powerful.', 'Parting with friends is a sadness. A place is only a place.', 'Hope clouds observation.']
+>>> wikiquote.quotes('The Matrix (film)', max_quotes=2) # max_quotes defaults to 20
+# ['Don't think you are, know you are.', 'Fate, it seems, is not without a sense of irony.']
 
 >>> wikiquote.quote_of_the_day() # returns a (quote, author) tuple
 # 'Always forgive your enemies; nothing annoys them so much.', 'Oscar Wilde'
@@ -56,17 +56,17 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
 >>> import wikiquote
 
->>> wikiquote.search('Dune', lang='fr')
-# ['Dune', 'Les Enfants de Dune', 'Les Hérétiques de Dune', 'Le Messie de Dune']
+>>> wikiquote.quotes('Dune', lang='en')[0]
+# 'Parting with friends is a sadness. A place is only a place.'
 
->>> wikiquote.quotes('Dune', lang='fr')[0]
-# 'Si les vœux étaient des poissons, nous lancerions tous des filets.'
+>>> wikiquote.quotes('Victor Hugo', lang='fr')[0]
+# 'Le plus lourd fardeau, c'est d'exister sans vivre.'
 
 >>> wikiquote.quotes('Nueve reinas', lang='es')[0]
 # 'Más ofendido estás... menos sospechoso pareces.'
 
 >>> wikiquote.quote_of_the_day(lang='es')
-# 'El universo no fue hecho a medida del hombre; tampoco le es hostil: es indiferente.', 'Carl Edward Sagan'
+# 'He sospechado alguna vez que la única cosa sin misterio es la felicidad, porque se justifica por sí sola.', 'Jorge Luis Borges'
 
 >>> wikiquote.quotes('Hermann Hesse', lang='de')[0]
 # 'Nun, aller höhere Humor fängt damit an, daß man die eigene Person nicht mehr ernst nimmt.'
@@ -80,6 +80,8 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 >>> wikiquote.quotes('José Saramago', lang='pt')[0]
 # 'Nem a juventude sabe o que pode, nem a velhice pode o que sabe.'
 ```
+
+Specifying an invalid language will result in an `UnsupportedLanguageException`.
 
 ## Tips
 Use `random.choice()` to select a random quote from an article:

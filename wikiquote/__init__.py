@@ -1,5 +1,7 @@
 from .quotes import quotes, random_titles, search
 from .qotd import quote_of_the_day
+from .utils import DisambiguationPageException, NoSuchPageException, \
+    UnsupportedLanguageException
 from . import langs
 
 
@@ -16,5 +18,8 @@ __all__ = [
     'search',
     'qotd',
     'quote_of_the_day',
-    'supported_languages'
+    'supported_languages',
+    'DisambiguationPageException',
+    'NoSuchPageException',
+    'UnsupportedLanguageException'
 ]
