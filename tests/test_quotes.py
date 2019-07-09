@@ -8,20 +8,17 @@ class QuotesTest(unittest.TestCase):
     """
 
     def test_disambiguation(self):
-        self.assertRaises(wikiquote.utils.DisambiguationPageException,
-                          wikiquote.quotes,
-                          'Matrix')
+        with self.assertRaises(wikiquote.DisambiguationPageException):
+            wikiquote.quotes('Matrix')
 
     def test_no_such_page(self):
-        self.assertRaises(wikiquote.utils.NoSuchPageException,
-                          wikiquote.quotes,
-                          'foobarfoobar')
+        with self.assertRaises(wikiquote.utils.NoSuchPageException):
+            wikiquote.quotes('foobarfoobar')
 
     def test_unsupported_lang(self):
-        self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
-                          wikiquote.quotes,
-                          'Matrix',
-                          lang='foobar')
+        with self.assertRaisesRegex(wikiquote.UnsupportedLanguageException,
+                                    'Unsupported language: foobar'):
+            wikiquote.quotes('Matrix', lang='foobar')
 
     def test_normal_quotes(self):
         for lang in wikiquote.supported_languages():

@@ -13,10 +13,9 @@ class SearchTest(unittest.TestCase):
             self.assertTrue(len(results) > 0)
 
     def test_unsupported_lang(self):
-        self.assertRaises(wikiquote.utils.UnsupportedLanguageException,
-                          wikiquote.search,
-                          'Matrix',
-                          lang='foobar')
+        with self.assertRaisesRegex(wikiquote.UnsupportedLanguageException,
+                                    'Unsupported language: foobar'):
+            wikiquote.search('test', lang='foobar')
 
     def test_empty_search(self):
         results = wikiquote.search('')

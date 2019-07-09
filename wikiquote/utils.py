@@ -5,6 +5,7 @@ import lxml
 import re
 
 from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
+from .langs import SUPPORTED_LANGUAGES
 
 
 class NoSuchPageException(Exception):
@@ -34,6 +35,18 @@ def json_from_url(url, params=None):
     res = urllib.request.urlopen(url)
     body = res.read().decode('utf-8')
     return json.loads(body)
+
+
+def validate_lang(fn):
+    def internal(*args, **kwargs):
+        lang = kwargs.get('lang')
+        if lang and lang not in SUPPORTED_LANGUAGES:
+            raise UnsupportedLanguageException(
+                'Unsupported language: {}'.format(lang))
+
+        return fn(*args, **kwargs)
+
+    return internal
 
 
 def clean_txt(txt):

@@ -12,11 +12,8 @@ def _is_disambiguation(categories):
     ])
 
 
+@utils.validate_lang
 def search(s, lang=DEFAULT_LANG):
-    if lang not in langs.SUPPORTED_LANGUAGES:
-        raise utils.UnsupportedLanguageException(
-            'Unsupported language: ' + lang)
-
     if not s:
         return []
 
@@ -26,22 +23,16 @@ def search(s, lang=DEFAULT_LANG):
     return results
 
 
+@utils.validate_lang
 def random_titles(lang=DEFAULT_LANG, max_titles=DEFAULT_MAX_QUOTES):
-    if lang not in langs.SUPPORTED_LANGUAGES:
-        raise utils.UnsupportedLanguageException(
-            'Unsupported language: ' + lang)
-
     local_random_url = utils.RANDOM_URL.format(lang=lang, limit=max_titles)
     data = utils.json_from_url(local_random_url)
     results = [entry['title'] for entry in data['query']['random']]
     return results
 
 
+@utils.validate_lang
 def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang=DEFAULT_LANG):
-    if lang not in langs.SUPPORTED_LANGUAGES:
-        raise utils.UnsupportedLanguageException(
-            'Unsupported language: ' + lang)
-
     local_page_url = utils.PAGE_URL.format(lang=lang)
     data = utils.json_from_url(local_page_url, page_title)
     if 'error' in data:
