@@ -14,9 +14,10 @@ class QotdTest(unittest.TestCase):
             self.assertTrue(len(quote) > 0)
 
     def test_unsupported_lang(self):
-        with self.assertRaisesRegex(wikiquote.UnsupportedLanguageException,
-                                    'Unsupported language: foobar'):
-            wikiquote.quote_of_the_day(lang='foobar')
+        with self.assertRaisesRegex(
+            wikiquote.UnsupportedLanguageException, "Unsupported language: foobar"
+        ):
+            wikiquote.quote_of_the_day(lang="foobar")
 
     def test_qotd_author(self):
         for lang in wikiquote.supported_languages():
@@ -25,7 +26,4 @@ class QotdTest(unittest.TestCase):
             self.assertTrue(len(author) > 0)
 
     def test_qotd_qotd(self):
-        self.assertEqual(
-            wikiquote.quote_of_the_day(),
-            wikiquote.qotd()
-        )
+        self.assertEqual(wikiquote.quote_of_the_day(), wikiquote.qotd())

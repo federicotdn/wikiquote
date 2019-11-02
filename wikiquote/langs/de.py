@@ -4,11 +4,11 @@ from .. import utils
 
 WORD_BLACKLIST = []
 MAIN_PAGE = "Hauptseite"
-HEADINGS = ['Überprüft']
+HEADINGS = ["Überprüft"]
 
 
 def remove_i_tags(tree):
-    for i in tree.xpath('//i'):
+    for i in tree.xpath("//i"):
         i.getparent().remove(i)
 
 
@@ -20,12 +20,12 @@ def extract_quotes(tree, max_quotes):
 
 
 def qotd(html_tree):
-    tree = html_tree.get_element_by_id('mf-ZitatdW')
-    raw_text = tree.xpath('div')[1].text_content().strip()
-    raw_text = re.sub(r'\(.*?\)', '', raw_text)
+    tree = html_tree.get_element_by_id("mf-ZitatdW")
+    raw_text = tree.xpath("div")[1].text_content().strip()
+    raw_text = re.sub(r"\(.*?\)", "", raw_text)
 
     raw_quote = []
-    for part in raw_text.split('\n'):
+    for part in raw_text.split("\n"):
         if part:
             raw_quote.append(part)
         if len(raw_quote) == 2:

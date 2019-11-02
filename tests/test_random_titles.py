@@ -13,6 +13,7 @@ class SearchTest(unittest.TestCase):
             self.assertTrue(len(results) == 20)
 
     def test_unsupported_lang(self):
-        with self.assertRaisesRegex(wikiquote.UnsupportedLanguageException,
-                                    'Unsupported language: foobar'):
-            wikiquote.random_titles(lang='foobar')
+        with self.assertRaisesRegex(
+            wikiquote.UnsupportedLanguageException, "Unsupported language: foobar"
+        ):
+            wikiquote.random_titles(lang="foobar")

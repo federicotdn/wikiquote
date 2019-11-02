@@ -6,7 +6,11 @@ manual_checks:
 test:
 	python3 -m unittest
 
-flake8:
+format:
+	black wikiquote tests
+
+lint:
+	black --check wikiquote tests
 	flake8 wikiquote tests
 
 package:

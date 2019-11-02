@@ -3,6 +3,7 @@
 ![License](https://img.shields.io/pypi/l/wikiquote.svg?style=flat)
 ![](https://img.shields.io/badge/python-3-blue.svg)
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
+![Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 The `wikiquote` Python 3 module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
 
@@ -103,7 +104,7 @@ $ make test
 After that, check that the `wikiquote` package follows the PEP 8 conventions:
 ```bash
 $ pip3 install -r requirements-dev.txt
-$ make flake8
+$ make lint
 ```
 Finally, create a pull request stating your changes.
 

@@ -2,13 +2,7 @@ from .. import utils
 
 MAIN_PAGE = "Pagina_principale"
 WORD_BLACKLIST = []
-HEADINGS = [
-    'Bibliografia',
-    'Opere',
-    'Altri progetti',
-    'Note',
-    'Voci correlate'
-]
+HEADINGS = ["Bibliografia", "Opere", "Altri progetti", "Note", "Voci correlate"]
 
 
 def extract_quotes(tree, max_quotes):
@@ -16,11 +10,11 @@ def extract_quotes(tree, max_quotes):
 
 
 def qotd(html_tree):
-    tree = html_tree.get_element_by_id('mf-Qotd')
+    tree = html_tree.get_element_by_id("mf-Qotd")
 
-    quote_container = tree.xpath('div')[0].text_content().split('„')
+    quote_container = tree.xpath("div")[0].text_content().split("„")
 
-    quote = quote_container[0].lstrip('“').strip()
+    quote = quote_container[0].lstrip("“").strip()
     author = quote_container[1].strip()
 
     return quote, author

@@ -9,5 +9,5 @@ install:
   - pip install -r requirements.txt -r requirements-dev.txt
 
 script:
-  - make flake8
+  - make lint
   - make test

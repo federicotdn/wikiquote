@@ -11,9 +11,9 @@ def extract_quotes(tree, max_quotes):
 
 
 def qotd(html_tree):
-    tree = html_tree.get_element_by_id('mf-cdj')
-    tree = tree.xpath('div/div')[1].xpath('table/tbody/tr/td')[1]
+    tree = html_tree.get_element_by_id("mf-cdj")
+    tree = tree.xpath("div/div")[1].xpath("table/tbody/tr/td")[1]
 
-    quote = tree.xpath('div/i')[0].text_content()
-    author = tree.xpath('div/a')[0].text_content()
+    quote = tree.xpath("div/i")[0].text_content()
+    author = tree.xpath("div/a")[0].text_content()
     return quote, author

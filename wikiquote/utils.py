@@ -20,29 +20,30 @@ class UnsupportedLanguageException(Exception):
     pass
 
 
-W_URL = 'http://{lang}.wikiquote.org/w/api.php'
-SRCH_URL = W_URL + '?format=json&action=query&list=search&continue=&srsearch='
-RANDOM_URL = W_URL + \
-    '?format=json&action=query&list=random&rnnamespace=0&rnlimit={limit}'
-PAGE_URL = W_URL + '?format=json&action=parse&prop=text|categories&' \
-    'disableeditsection&page='
-MAINPAGE_URL = W_URL + '?format=json&action=parse&prop=text&page='
+W_URL = "http://{lang}.wikiquote.org/w/api.php"
+SRCH_URL = W_URL + "?format=json&action=query&list=search&continue=&srsearch="
+RANDOM_URL = (
+    W_URL + "?format=json&action=query&list=random&rnnamespace=0&rnlimit={limit}"
+)
+PAGE_URL = (
+    W_URL + "?format=json&action=parse&prop=text|categories&" "disableeditsection&page="
+)
+MAINPAGE_URL = W_URL + "?format=json&action=parse&prop=text&page="
 
 
 def json_from_url(url, params=None):
     if params:
         url += urllib.parse.quote(params)
     res = urllib.request.urlopen(url)
-    body = res.read().decode('utf-8')
+    body = res.read().decode("utf-8")
     return json.loads(body)
 
 
 def validate_lang(fn):
     def internal(*args, **kwargs):
-        lang = kwargs.get('lang')
+        lang = kwargs.get("lang")
         if lang and lang not in SUPPORTED_LANGUAGES:
-            raise UnsupportedLanguageException(
-                'Unsupported language: {}'.format(lang))
+            raise UnsupportedLanguageException("Unsupported language: {}".format(lang))
 
         return fn(*args, **kwargs)
 
@@ -51,17 +52,17 @@ def validate_lang(fn):
 
 def clean_txt(txt):
     # Remove unwanted characters
-    txt = re.sub(r'«|»|"|“|”', '', txt)
+    txt = re.sub(r'«|»|"|“|”', "", txt)
 
     # Remove non-breaking spaces
-    txt = txt.replace('\xa0', '')
+    txt = txt.replace("\xa0", "")
 
     # Remove leading and trailing newlines/quotes
     return txt.strip()
 
 
 def remove_credit(quote):
-    if quote.endswith(('–', '-')):
+    if quote.endswith(("–", "-")):
         quote = quote[:-1].rstrip()
     return quote
 
@@ -73,8 +74,8 @@ def is_quote(txt, word_blacklist):
         len(txt) < MIN_QUOTE_LEN,
         len(txt_split) < MIN_QUOTE_WORDS,
         any(True for word in txt_split if word in word_blacklist),
-        txt.endswith(('(', ':', ']')),
-        txt.startswith(('(',))
+        txt.endswith(("(", ":", "]")),
+        txt.startswith(("(",)),
     ]
 
     # Returns False if any invalid conditions are True, otherwise returns True.
@@ -83,7 +84,7 @@ def is_quote(txt, word_blacklist):
 
 def is_quote_node(node):
     # Discard nodes with the <small> tag
-    if node.find('small') is not None:
+    if node.find("small") is not None:
         return False
 
     # Discard nodes that are just a link
@@ -91,7 +92,7 @@ def is_quote_node(node):
     # The link may be inside <i> or <b> tags, so keep peeling layers
     suspect_node = node
     while True:
-        node_children = suspect_node.xpath('child::node()')
+        node_children = suspect_node.xpath("child::node()")
         if len(node_children) != 1:
             break
 
@@ -99,7 +100,7 @@ def is_quote_node(node):
         if not isinstance(suspect_node, lxml.etree._Element):
             break
 
-        if suspect_node.tag == 'a':
+        if suspect_node.tag == "a":
             return False
 
     return True
@@ -119,16 +120,16 @@ def extract_quotes_li(tree, max_quotes, headings=None, word_blacklist=None):
 
     # Scan for list items and description list tags
     # Also grab headlines to skip some sections.
-    node_list = tree.xpath('//div/ul/li|//div/dl|//h2|//h3')
+    node_list = tree.xpath("//div/ul/li|//div/dl|//h2|//h3")
 
     # Skip all quotes above the first heading, if there are any headings
-    skip_to_next_heading = bool(tree.xpath('//h2|//h3'))
+    skip_to_next_heading = bool(tree.xpath("//h2|//h3"))
 
     for node in node_list:
-        if node.tag not in ['h2', 'h3'] and skip_to_next_heading:
+        if node.tag not in ["h2", "h3"] and skip_to_next_heading:
             continue
 
-        if node.tag in ['h2', 'h3']:
+        if node.tag in ["h2", "h3"]:
             skip_to_next_heading = False
             heading_text = node.text_content().lower()
 
@@ -141,28 +142,26 @@ def extract_quotes_li(tree, max_quotes, headings=None, word_blacklist=None):
 
         potential_quote = None
 
-        if node.tag == 'dl':
+        if node.tag == "dl":
             # <dl>'s are assumed to be multi-line dialogue
-            dds = node.xpath('dd')
+            dds = node.xpath("dd")
 
             if not all(is_quote_node(dd) for dd in dds):
                 continue
 
-            full_dialogue = '\n'.join(
-                dd.text_content().strip()
-                for dd in dds)
+            full_dialogue = "\n".join(dd.text_content().strip() for dd in dds)
 
             potential_quote = clean_txt(full_dialogue)
         else:
             # Handle <li>'s
-            uls = node.xpath('ul')
+            uls = node.xpath("ul")
             for ul in uls:
                 ul.getparent().remove(ul)
 
             if not is_quote_node(node):
                 continue
 
-            txt = ' '.join(node.text_content().split())
+            txt = " ".join(node.text_content().split())
             potential_quote = clean_txt(txt)
 
         if potential_quote and is_quote(potential_quote, word_blacklist):
