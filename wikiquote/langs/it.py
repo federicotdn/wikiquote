@@ -1,18 +1,17 @@
 from .. import utils
 
 MAIN_PAGE = "Pagina_principale"
-WORD_BLACKLIST = []
 HEADINGS = ["Bibliografia", "Opere", "Altri progetti", "Note", "Voci correlate"]
 
 
 def extract_quotes(tree, max_quotes):
-    return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
+    return utils.extract_quotes_li(tree, max_quotes, HEADINGS)
 
 
 def qotd(html_tree):
-    tree = html_tree.get_element_by_id("mf-Qotd")
+    tree = html_tree.xpath("//div[@class='main-page-qotd']/div")[2]
 
-    quote_container = tree.xpath("div")[0].text_content().split("„")
+    quote_container = tree.text_content().split("„")
 
     quote = quote_container[0].lstrip("“").strip()
     author = quote_container[1].strip()
