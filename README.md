@@ -1,5 +1,5 @@
 # wikiquote
-[![Build Status](https://travis-ci.org/federicotdn/wikiquote.svg?branch=travis)](https://travis-ci.org/federicotdn/wikiquote)
+[![CI Status](https://github.com/federicotdn/wikiquote/workflows/CI/badge.svg)](https://github.com/federicotdn/wikiquote/actions)
 ![License](https://img.shields.io/pypi/l/wikiquote.svg?style=flat)
 ![](https://img.shields.io/badge/python-3-blue.svg)
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
