@@ -11,10 +11,10 @@ class SearchTest(unittest.TestCase):
 
     def test_search(self):
 
-        query_by_lang = defaultdict(lambda: 'Matrix')
+        query_by_lang = defaultdict(lambda: "Matrix")
         special_cases = {
             # The hebrew wikiquote doesn't support searches in English
-            'he': 'מטריקס',
+            "he": "מטריקס",
         }
 
         query_by_lang.update(special_cases)

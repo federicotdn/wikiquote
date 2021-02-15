@@ -10,18 +10,17 @@ def extract_quotes(tree, max_quotes):
 
 
 def remove_credit_he(quote):
-    if '~' in quote:
-        return quote.split('~')[0]
+    if "~" in quote:
+        return quote.split("~")[0]
 
     return quote.strip()
 
 
 def qotd(html_tree):
 
-    quote_box = html_tree.xpath(
-        '//div[1]/table[3]/tbody/tr[2]/td')[0]
+    quote_box = html_tree.xpath("//div[1]/table[3]/tbody/tr[2]/td")[0]
 
-    quote = quote_box.xpath('b')[0]
-    author = quote_box.xpath('small')[0]
+    quote = quote_box.xpath("b")[0]
+    author = quote_box.xpath("small")[0]
 
     return quote.text_content(), author.text_content()

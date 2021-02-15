@@ -10,6 +10,6 @@ class SupportedLangsTest(unittest.TestCase):
     def test_supported_languages(self):
         # Check that all language modules are being loaded
         self.assertListEqual(
-            wikiquote.supported_languages(
-            ), ["de", "en", "es", "fr", "he", "it", "pl", "pt"]
+            wikiquote.supported_languages(),
+            ["de", "en", "es", "fr", "he", "it", "pl", "pt"],
         )

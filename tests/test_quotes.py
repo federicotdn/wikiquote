@@ -25,9 +25,9 @@ class QuotesTest(unittest.TestCase):
 
     def test_normal_quotes(self):
 
-        query_by_lang = defaultdict(lambda: 'Barack Obama')
+        query_by_lang = defaultdict(lambda: "Barack Obama")
         # Special case: The hebrew wikiquote doesn't support searches in English
-        query_by_lang['he'] = 'ברק אובמה'
+        query_by_lang["he"] = "ברק אובמה"
 
         for lang in wikiquote.supported_languages():
             quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)
