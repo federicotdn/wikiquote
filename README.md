@@ -32,7 +32,7 @@ $ pip3 install --upgrade wikiquote
 # ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['de', 'en', 'es', 'fr', 'it', 'pl', 'pt']
+# ['de', 'en', 'es', 'fr', 'he', 'it', 'pl', 'pt']
 
 ```
 
