@@ -1,6 +1,8 @@
 import wikiquote
 import unittest
 
+from collections import defaultdict
+
 
 class QuotesTest(unittest.TestCase):
     """
@@ -22,8 +24,13 @@ class QuotesTest(unittest.TestCase):
             wikiquote.quotes("Matrix", lang="foobar")
 
     def test_normal_quotes(self):
+
+        query_by_lang = defaultdict(lambda: "Barack Obama")
+        # Special case: The hebrew wikiquote doesn't support searches in English
+        query_by_lang["he"] = "ברק אובמה"
+
         for lang in wikiquote.supported_languages():
-            quotes = wikiquote.quotes("Barack Obama", lang=lang)
+            quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)
             self.assertTrue(len(quotes) > 0)
 
     def test_max_quotes(self):

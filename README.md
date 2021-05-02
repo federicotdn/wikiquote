@@ -46,12 +46,13 @@ The `wikiquote` module currently supports the following languages:
 | Language   | ISO 639-1 Code |
 |------------|----------------|
 | English    | `en`           |
-| Spanish    | `es`           |
-| German     | `de`           |
 | French     | `fr`           |
+| German     | `de`           |
+| Hebrew     | `he`           |
 | Italian    | `it`           |
 | Polish     | `pl`           |
 | Portuguese | `pt`           |
+| Spanish    | `es`           |
 
 Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
