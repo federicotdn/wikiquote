@@ -5,10 +5,12 @@
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 ![Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
-The `wikiquote` Python 3 module allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, and also retrieve the quote of the day. Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
+The `wikiquote` package for Python 3.X allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, as well as retrieve the quote of the day.
+
+Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
 
 ## Installation
-You can install the `wikiquote` module using `pip`:
+You can install the `wikiquote` package using `pip`:
 ```bash
 $ pip3 install --upgrade wikiquote
 ```
