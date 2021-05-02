@@ -111,7 +111,10 @@ $ make lint
 ```
 Finally, create a pull request stating your changes.
 
-## TODO
-- Improve the way quotes are searched for in the HTML articles, avoid returning things like external references, links or notes from quotes.
-- Add more/better tests (for example, check that returned quotes do not contain characters like '(' or ')').
-- Add support for more languages: each language may require a different scrapping method.
+## Changelog
+See the [CHANGELOG.md](CHANGELOG.md) file.
+
+## Pending Tasks
+- [ ] Improve the way quotes are searched for in the HTML articles, avoid returning things like external references, links or notes from quotes.
+- [ ] Add more/better tests (for example, check that returned quotes do not contain characters like '(' or ')').
+- [ ] Add support for more languages: each language may require a different scrapping method.
