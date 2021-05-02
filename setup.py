@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-VERSION = "0.1.14"
+VERSION = "0.1.15"
 
 
 with open("requirements.txt") as f:

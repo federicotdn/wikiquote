@@ -1,5 +1,5 @@
 # Changelog for `wikiquote`
-## **master**
+## **0.1.15** - 03/05/2021
 - Added support for Hebrew language.
 - Dropped support for Python 3.4 and 3.5.
 - Fixed QOTD for Italian language.
