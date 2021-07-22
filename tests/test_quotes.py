@@ -28,6 +28,8 @@ class QuotesTest(unittest.TestCase):
         query_by_lang = defaultdict(lambda: "Barack Obama")
         # Special case: The hebrew wikiquote doesn't support searches in English
         query_by_lang["he"] = "ברק אובמה"
+        # Special case: The basque wikiquote doesn't have a page for Barack Obama
+        query_by_lang["eu"] = "Simón Bolívar"
 
         for lang in wikiquote.supported_languages():
             quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)

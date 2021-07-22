@@ -8,7 +8,7 @@ import wikiquote
 
 @pytest.mark.parametrize("lang", wikiquote.supported_languages())
 def test_qotd_quote(lang):
-    if lang == "pt":
+    if lang in ["pt", "eu"]:
         pytest.skip()
 
     quote, _ = wikiquote.quote_of_the_day(lang=lang)
@@ -23,7 +23,7 @@ def test_unsupported_lang():
 
 @pytest.mark.parametrize("lang", wikiquote.supported_languages())
 def test_qotd_author(lang):
-    if lang == "pt":
+    if lang in ["pt", "eu"]:
         pytest.skip()
 
     _, author = wikiquote.quote_of_the_day(lang=lang)
