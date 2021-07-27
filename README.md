@@ -49,6 +49,7 @@ The `wikiquote` module currently supports the following languages:
 
 | Language   | ISO 639-1 Code |
 |------------|----------------|
+| Basque     | `eu`           |
 | English    | `en`           |
 | French     | `fr`           |
 | German     | `de`           |
@@ -57,7 +58,6 @@ The `wikiquote` module currently supports the following languages:
 | Polish     | `pl`           |
 | Portuguese | `pt`           |
 | Spanish    | `es`           |
-| Basque     | `eu`           |
 
 Use the `lang` parameter to specify the language (defaults to `en`):
 ```python
