@@ -18,6 +18,7 @@ setup(
     author="Federico Tedin",
     author_email="federicotedin@gmail.com",
     install_requires=requires,
+    python_requires=">=3.6",
     url="https://github.com/federicotdn/wikiquote",
     download_url="https://github.com/federicotdn/wikiquote/archive/{}.tar.gz".format(
         VERSION
