@@ -1,4 +1,9 @@
 # Changelog for `wikiquote`
+## **0.1.16** - 28/07/2021
+- Added support for Basque language.
+- Fixed QOTD for French language (added secondary extraction method).
+- Added the `MissingQOTDException` class, used to signal errors when retrieving the quote of the day.
+
 ## **0.1.15** - 03/05/2021
 - Added support for Hebrew language.
 - Dropped support for Python 3.4 and 3.5.

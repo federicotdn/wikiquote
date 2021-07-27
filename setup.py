@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.1.15"
+VERSION = "0.1.16"
 
 
 with open("requirements.txt") as f:
