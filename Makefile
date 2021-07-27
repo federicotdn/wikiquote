@@ -4,7 +4,7 @@ manual_checks:
 	PYTHONPATH=$$(pwd) python3 util/manual_checks.py 
 
 test:
-	pytest tests
+	pytest tests -vvv -rs
 
 format:
 	black wikiquote tests

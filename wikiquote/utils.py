@@ -20,6 +20,10 @@ class UnsupportedLanguageException(Exception):
     pass
 
 
+class MissingQOTDException(Exception):
+    pass
+
+
 W_URL = "http://{lang}.wikiquote.org/w/api.php"
 SRCH_URL = W_URL + "?format=json&action=query&list=search&continue=&srsearch="
 RANDOM_URL = (

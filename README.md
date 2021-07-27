@@ -40,7 +40,9 @@ $ pip3 install --upgrade wikiquote
 
 Some article titles will lead to a Disambiguation page (like `Matrix`), which will raise a `DisambiguationPageException` exception. Usually this happens because there are many articles matching the search term. When this happens, try using `search()` first, and then use one of the specific article titles found.
 
-If the article searched for does not exist, and no similar results exist, a `NoSuchPageException` will be raised instead.
+If the article searched for does not exist, and no similar results exist, `NoSuchPageException` will be raised instead.
+
+When requesting the quote of the day, a `MissingQOTDException` exception will be raised if the quote of the day could not be extracted from Wikiquote's main page. This usually happens because the page's layout has been changed.
 
 ## Languages
 The `wikiquote` module currently supports the following languages:

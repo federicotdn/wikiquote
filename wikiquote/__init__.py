@@ -4,6 +4,7 @@ from .utils import (
     DisambiguationPageException,
     NoSuchPageException,
     UnsupportedLanguageException,
+    MissingQOTDException,
 )
 from . import langs
 
@@ -25,4 +26,5 @@ __all__ = [
     "DisambiguationPageException",
     "NoSuchPageException",
     "UnsupportedLanguageException",
+    "MissingQOTDException",
 ]
