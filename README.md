@@ -34,7 +34,7 @@ $ pip3 install --upgrade wikiquote
 # ['The Lion King', 'Johannes Kepler', 'Rosa Parks']
 
 >>> wikiquote.supported_languages()
-# ['de', 'en', 'es', 'fr', 'he', 'it', 'pl', 'pt']
+# ['de', 'en', 'es', 'eu', 'fr', 'he', 'it', 'pl', 'pt']
 
 ```
 
@@ -88,7 +88,7 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 # 'Nem a juventude sabe o que pode, nem a velhice pode o que sabe.'
 ```
 
-Specifying an invalid language will result in an `UnsupportedLanguageException`.
+Specifying an invalid language will result in an `UnsupportedLanguageException` exception.
 
 ## Tips
 Use `random.choice()` to select a random quote from an article:
