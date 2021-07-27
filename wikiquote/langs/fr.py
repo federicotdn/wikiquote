@@ -1,5 +1,9 @@
+from typing import List, Text, Tuple
+
 import logging
 import re
+
+import lxml
 
 from .. import utils
 
@@ -9,14 +13,14 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 
-def extract_quotes(tree, max_quotes):
+def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
     # French wiki uses a "citation" HTML class
     nodes = tree.xpath('//div[@class="citation"]')
     quotes = [utils.clean_txt(node.text_content()) for node in nodes]
     return quotes[:max_quotes]
 
 
-def qotd_old_method(html_tree):
+def qotd_old_method(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     tree = html_tree.get_element_by_id("mf-cdj")
     tree = tree.xpath("div/div")[1].xpath("table/tbody/tr/td")[1]
 
@@ -25,7 +29,7 @@ def qotd_old_method(html_tree):
     return quote, author
 
 
-def qotd_new_method(html_tree):
+def qotd_new_method(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     tree = html_tree.get_element_by_id("mf-cdj")
     lines = [
         line.strip().replace(u"\xa0", " ") for line in tree.text_content().splitlines()
@@ -44,7 +48,7 @@ def qotd_new_method(html_tree):
     raise Exception("Could not parse quote of the day from page contents.")
 
 
-def qotd(html_tree):
+def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     try:
         return qotd_new_method(html_tree)
     except Exception as e:

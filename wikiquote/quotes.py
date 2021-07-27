@@ -1,3 +1,5 @@
+from typing import List, Text, Dict, Any
+
 import lxml.html
 
 from . import utils
@@ -5,7 +7,7 @@ from . import langs
 from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES
 
 
-def _is_disambiguation(categories):
+def _is_disambiguation(categories: List[Dict[Text, Any]]) -> bool:
     # Checks to see if at least one category includes 'Disambiguation_pages'
     return not categories or any(
         [category["*"] == "Disambiguation_pages" for category in categories]
@@ -13,7 +15,7 @@ def _is_disambiguation(categories):
 
 
 @utils.validate_lang
-def search(s, lang=DEFAULT_LANG):
+def search(s: Text, lang: Text = DEFAULT_LANG) -> List[Text]:
     if not s:
         return []
 
@@ -24,7 +26,9 @@ def search(s, lang=DEFAULT_LANG):
 
 
 @utils.validate_lang
-def random_titles(lang=DEFAULT_LANG, max_titles=DEFAULT_MAX_QUOTES):
+def random_titles(
+    lang: Text = DEFAULT_LANG, max_titles: int = DEFAULT_MAX_QUOTES
+) -> List[Text]:
     local_random_url = utils.RANDOM_URL.format(lang=lang, limit=max_titles)
     data = utils.json_from_url(local_random_url)
     results = [entry["title"] for entry in data["query"]["random"]]
@@ -32,7 +36,9 @@ def random_titles(lang=DEFAULT_LANG, max_titles=DEFAULT_MAX_QUOTES):
 
 
 @utils.validate_lang
-def quotes(page_title, max_quotes=DEFAULT_MAX_QUOTES, lang=DEFAULT_LANG):
+def quotes(
+    page_title: Text, max_quotes: int = DEFAULT_MAX_QUOTES, lang: Text = DEFAULT_LANG
+) -> List[Text]:
     local_page_url = utils.PAGE_URL.format(lang=lang)
     data = utils.json_from_url(local_page_url, page_title)
     if "error" in data:

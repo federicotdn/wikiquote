@@ -1,3 +1,7 @@
+from typing import List, Text, Tuple
+
+import lxml
+
 from .. import utils
 
 MAIN_PAGE = "Portada"
@@ -5,11 +9,11 @@ WORD_BLACKLIST = ["Fuente:", "Traducción:", "Nota:"]
 HEADINGS = ["enlaces externos", "referencias"]
 
 
-def extract_quotes(tree, max_quotes):
+def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
     return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
 
 
-def qotd(html_tree):
+def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     tree = html_tree.get_element_by_id("mf-FDD")
 
     quote_container = tree.xpath("div/table/tbody/tr")

@@ -1,3 +1,4 @@
+from typing import List, Text, Optional, Dict, Any, Callable, TypeVar
 import urllib.request
 import urllib.parse
 import json
@@ -6,6 +7,8 @@ import re
 
 from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
 from .langs import SUPPORTED_LANGUAGES
+
+T = TypeVar("T")
 
 
 class NoSuchPageException(Exception):
@@ -35,7 +38,7 @@ PAGE_URL = (
 MAINPAGE_URL = W_URL + "?format=json&action=parse&prop=text&page="
 
 
-def json_from_url(url, params=None):
+def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
     if params:
         url += urllib.parse.quote(params)
     res = urllib.request.urlopen(url)
@@ -43,8 +46,8 @@ def json_from_url(url, params=None):
     return json.loads(body)
 
 
-def validate_lang(fn):
-    def internal(*args, **kwargs):
+def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
+    def internal(*args: Any, **kwargs: Any) -> T:
         lang = kwargs.get("lang")
         if lang and lang not in SUPPORTED_LANGUAGES:
             raise UnsupportedLanguageException("Unsupported language: {}".format(lang))
@@ -54,7 +57,7 @@ def validate_lang(fn):
     return internal
 
 
-def clean_txt(txt):
+def clean_txt(txt: Text) -> Text:
     # Remove unwanted characters
     txt = re.sub(r'«|»|"|“|”', "", txt)
 
@@ -65,13 +68,13 @@ def clean_txt(txt):
     return txt.strip()
 
 
-def remove_credit(quote):
+def remove_credit(quote: Text) -> Text:
     if quote.endswith(("–", "-")):
         quote = quote[:-1].rstrip()
     return quote
 
 
-def is_quote(txt, word_blacklist):
+def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
     txt_split = txt.split()
     invalid_conditions = [
         txt and txt[0].isalpha() and txt[0].islower(),
@@ -86,7 +89,7 @@ def is_quote(txt, word_blacklist):
     return not any(invalid_conditions)
 
 
-def is_quote_node(node):
+def is_quote_node(node: lxml.html.HtmlElement) -> bool:
     # Discard nodes with the <small> tag
     if node.find("small") is not None:
         return False
@@ -110,7 +113,12 @@ def is_quote_node(node):
     return True
 
 
-def extract_quotes_li(tree, max_quotes, headings=None, word_blacklist=None):
+def extract_quotes_li(
+    tree: lxml.html.HtmlElement,
+    max_quotes: int,
+    headings: Optional[List[Text]] = None,
+    word_blacklist: Optional[List[Text]] = None,
+) -> List[Text]:
     # Check for quotes inside list items and description lists
     # This function works well for EN, DE and ES versions of Wikiquote articles
     headings = headings or []

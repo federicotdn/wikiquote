@@ -1,3 +1,5 @@
+from typing import Tuple, Text
+
 import lxml.html
 
 from . import utils
@@ -6,7 +8,7 @@ from .constants import DEFAULT_LANG
 
 
 @utils.validate_lang
-def quote_of_the_day(lang=DEFAULT_LANG):
+def quote_of_the_day(lang: Text = DEFAULT_LANG) -> Tuple[Text, Text]:
     main_page = langs.main_page_lang(lang)
 
     data = utils.json_from_url(utils.MAINPAGE_URL.format(lang=lang), main_page)

@@ -6,6 +6,9 @@ manual_checks:
 test:
 	pytest tests -vvv -rs
 
+types:
+	mypy wikiquote
+
 format:
 	black wikiquote tests
 
