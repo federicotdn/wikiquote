@@ -6,7 +6,7 @@ VERSION = "0.1.15"
 with open("requirements.txt") as f:
     requires = f.read().splitlines()
 
-with open("README.rst") as f:
+with open("README.md") as f:
     long_description = f.read()
 
 setup(
@@ -15,10 +15,11 @@ setup(
     version=VERSION,
     description="Retrieve quotes from any Wikiquote article.",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Federico Tedin",
     author_email="federicotedin@gmail.com",
     install_requires=requires,
-    python_requires=">=3.6",
+    python_requires=">=3.6, <4",
     url="https://github.com/federicotdn/wikiquote",
     download_url="https://github.com/federicotdn/wikiquote/archive/{}.tar.gz".format(
         VERSION
