@@ -1,44 +1,35 @@
+import pytest
 import wikiquote
-import unittest
 
 from collections import defaultdict
 
+def test_disambiguation():
+    with pytest.raises(wikiquote.DisambiguationPageException):
+        wikiquote.quotes("Matrix")
 
-class QuotesTest(unittest.TestCase):
-    """
-    Test wikiquote.quotes()
-    """
+def test_no_such_page():
+    with pytest.raises(wikiquote.utils.NoSuchPageException):
+        wikiquote.quotes("foobarfoobar")
 
-    def test_disambiguation(self):
-        with self.assertRaises(wikiquote.DisambiguationPageException):
-            wikiquote.quotes("Matrix")
+def test_unsupported_lang():
+    with pytest.raises(wikiquote.UnsupportedLanguageException, match="Unsupported language: foobar"):
+        wikiquote.quotes("Matrix", lang="foobar")
 
-    def test_no_such_page(self):
-        with self.assertRaises(wikiquote.utils.NoSuchPageException):
-            wikiquote.quotes("foobarfoobar")
+def test_normal_quotes():
+    query_by_lang = defaultdict(lambda: "Barack Obama")
+    # Special case: The Hebrew wikiquote doesn't support searches in English
+    query_by_lang["he"] = "ברק אובמה"
+    # Special case: The Basque wikiquote doesn't have a page for Barack Obama
+    query_by_lang["eu"] = "Simón Bolívar"
 
-    def test_unsupported_lang(self):
-        with self.assertRaisesRegex(
-            wikiquote.UnsupportedLanguageException, "Unsupported language: foobar"
-        ):
-            wikiquote.quotes("Matrix", lang="foobar")
+    for lang in wikiquote.supported_languages():
+        quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)
+        assert len(quotes) > 0
 
-    def test_normal_quotes(self):
+def test_max_quotes():
+    quotes = wikiquote.quotes("The Matrix (film)", max_quotes=8)
+    assert len(quotes) == 8
 
-        query_by_lang = defaultdict(lambda: "Barack Obama")
-        # Special case: The hebrew wikiquote doesn't support searches in English
-        query_by_lang["he"] = "ברק אובמה"
-        # Special case: The basque wikiquote doesn't have a page for Barack Obama
-        query_by_lang["eu"] = "Simón Bolívar"
-
-        for lang in wikiquote.supported_languages():
-            quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)
-            self.assertTrue(len(quotes) > 0)
-
-    def test_max_quotes(self):
-        quotes = wikiquote.quotes("The Matrix (film)", max_quotes=8)
-        self.assertEqual(len(quotes), 8)
-
-    def test_max_quotes_and_lang(self):
-        quotes = wikiquote.quotes("Matrix", lang="fr", max_quotes=8)
-        self.assertEqual(len(quotes), 8)
+def test_max_quotes_and_lang():
+    quotes = wikiquote.quotes("Matrix", lang="fr", max_quotes=8)
+    assert len(quotes) == 8
