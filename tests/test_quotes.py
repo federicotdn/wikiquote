@@ -68,3 +68,9 @@ def test_invalid_search():
     assert query not in results
 
 
+def test_valid_random_titles():
+    """Test that a valid random_titles returns a list of results equal in length to the max_titles argument"""
+    num_titles = 5
+    titles = wikiquote.random_titles(max_titles=num_titles)
+    assert len(titles) == num_titles
+
