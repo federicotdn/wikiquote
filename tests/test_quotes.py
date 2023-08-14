@@ -87,10 +87,25 @@ def test_valid_random_titles():
 
 @pytest.mark.xfail(reason="This test is expected to fail because we are requesting more quotes than exist for the page.")
 def test_max_quotes_exceed_limit():
-    query = "Albert Einstein"  # Assuming Einstein has quotes on wikiquote
+    """Test requesting more quotes than exist for a page returns the maximum number of quotes."""
+    query = "Albert Einstein"
     all_quotes = wikiquote.quotes(query)
     num_all_quotes = len(all_quotes)
     excessive_quotes = wikiquote.quotes(query, max_quotes=num_all_quotes + 1)
     assert len(excessive_quotes) == num_all_quotes
 
 
+@pytest.mark.parametrize(
+    "input_value",
+    [123, [], {}, 12.34, None]
+)
+def test_invalid_inputs(input_value):
+    """Test various non-string inputs to ensure they raise the standard TypeError."""
+    with pytest.raises(TypeError):
+        wikiquote.search(input_value)
+
+    with pytest.raises(TypeError):
+        wikiquote.quotes(input_value)
+
+    with pytest.raises(TypeException):
+        wikiquote.random_titles(lang=input_value)
