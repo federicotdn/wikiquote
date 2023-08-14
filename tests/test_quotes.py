@@ -1,8 +1,6 @@
 import pytest
 import wikiquote
 
-from collections import defaultdict
-
 
 def test_disambiguation():
     """Test that a disambiguation page raises an exception is raised when appropriate."""
@@ -22,11 +20,24 @@ def test_unsupported_lang():
         wikiquote.quotes("Matrix", lang="foobar")
 
 
-@pytest.mark.parametrize("lang, query", [("en", "Barack Obama"), ("he", "ברק אובמה"), ("es", "Simón Bolívar"), ("fr", "Victor Hugo")])
+@pytest.mark.parametrize(
+    "lang, query",
+    [("en", "Barack Obama"), ("he", "ברק אובמה"), ("es", "Simón Bolívar"), ("fr", "Victor Hugo")],
+)
 def test_quotes_valid_lang_page(lang, query):
     """Test that quotes are returned when working arguments are passed."""
     quotes = wikiquote.quotes(query, lang=lang)
     assert len(quotes) > 0, f"No quotes found for {query} in {lang}."
+
+
+@pytest.mark.parametrize(
+    "lang, query",
+    [("en", "foobar1"), ("he", "foobar2"), ("es", "foobar3"), ("fr", "foobar4")]
+)
+def test_quotes_invalid_lang_page(lang, query):
+    """Test that an exception is raised when an invalid page is passed."""
+    with pytest.raises(wikiquote.utils.NoSuchPageException):
+        wikiquote.quotes(query, lang=lang)
 
 
 def test_max_quotes():
