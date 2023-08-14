@@ -22,17 +22,11 @@ def test_unsupported_lang():
         wikiquote.quotes("Matrix", lang="foobar")
 
 
-def test_normal_quotes():
+@pytest.mark.parametrize("lang, query", [("en", "Barack Obama"), ("he", "ברק אובמה"), ("es", "Simón Bolívar"), ("fr", "Victor Hugo")])
+def test_quotes_valid_lang_page(lang, query):
     """Test that quotes are returned when working arguments are passed."""
-    query_by_lang = defaultdict(lambda: "Barack Obama")
-    # Special case: The Hebrew wikiquote doesn't support searches in English
-    query_by_lang["he"] = "ברק אובמה"
-    # Special case: The Basque wikiquote doesn't have a page for Barack Obama
-    query_by_lang["eu"] = "Simón Bolívar"
-
-    for lang in wikiquote.supported_languages():
-        quotes = wikiquote.quotes(query_by_lang[lang], lang=lang)
-        assert len(quotes) > 0
+    quotes = wikiquote.quotes(query, lang=lang)
+    assert len(quotes) > 0, f"No quotes found for {query} in {lang}."
 
 
 def test_max_quotes():
