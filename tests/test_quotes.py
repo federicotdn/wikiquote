@@ -68,9 +68,29 @@ def test_invalid_search():
     assert query not in results
 
 
+def test_empty_search():
+    """Test that an empty search returns an empty list"""
+    # Test that an empty search returns an empty list
+    assert wikiquote.search("") == []
+
+    # Test that an empty search (None) raises a TypeError
+    with pytest.raises(TypeError):
+        assert wikiquote.search() == []
+
+
 def test_valid_random_titles():
     """Test that a valid random_titles returns a list of results equal in length to the max_titles argument"""
     num_titles = 5
     titles = wikiquote.random_titles(max_titles=num_titles)
     assert len(titles) == num_titles
+
+
+@pytest.mark.xfail(reason="This test is expected to fail because we are requesting more quotes than exist for the page.")
+def test_max_quotes_exceed_limit():
+    query = "Albert Einstein"  # Assuming Einstein has quotes on wikiquote
+    all_quotes = wikiquote.quotes(query)
+    num_all_quotes = len(all_quotes)
+    excessive_quotes = wikiquote.quotes(query, max_quotes=num_all_quotes + 1)
+    assert len(excessive_quotes) == num_all_quotes
+
 
