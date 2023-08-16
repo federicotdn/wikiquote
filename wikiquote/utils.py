@@ -116,12 +116,10 @@ def extract_quotes_li(
 
         # Potential quote is the first child node of the list item
         potential_quote = extract_potential_quote(node)
-
         if potential_quote and is_quote(potential_quote, word_blacklist or []):
             quotes_list.append(potential_quote)
             if max_quotes == len(quotes_list):
                 break
-
     return quotes_list
 
 
@@ -224,14 +222,11 @@ def is_quote_node(node: lxml.html.HtmlElement) -> bool:
         node_children = suspect_node.xpath("child::node()")
         if len(node_children) != 1:
             break
-
         suspect_node = node_children[0]
         if not isinstance(suspect_node, lxml.etree._Element):
             break
-
         if suspect_node.tag == "a":
             return False
-
     return True
 
 
@@ -243,11 +238,6 @@ def clean_txt(txt: Text) -> Text:
     :param txt: The text to clean
     :return: The cleaned text
     """
-    # Remove unwanted characters
-    txt = re.sub(r'«|»|"|“|”', "", txt)
-
-    # Remove non-breaking spaces
-    txt = txt.replace("\xa0", "")
-
-    # Remove leading and trailing newlines/quotes
-    return txt.strip()
+    txt = re.sub(r'«|»|"|“|”', "", txt)  # Remove unwanted characters
+    txt = txt.replace("\xa0", "")  # Remove non-breaking spaces
+    return txt.strip()  # Remove leading and trailing newlines/quotes
