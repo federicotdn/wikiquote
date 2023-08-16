@@ -5,7 +5,7 @@ import json
 import lxml
 import re
 
-from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS, MAINPAGE_URL, PAGE_URL, RANDOM_URL, SRCH_URL, W_URL
+from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
 from .langs import SUPPORTED_LANGUAGES
 
 T = TypeVar("T")

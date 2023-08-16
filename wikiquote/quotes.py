@@ -4,7 +4,7 @@ import lxml.html
 
 from . import utils
 from . import langs
-from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES
+from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES, SRCH_URL, RANDOM_URL, PAGE_URL
 
 
 def _is_disambiguation(categories: List[Dict[Text, Any]]) -> bool:
@@ -19,7 +19,7 @@ def search(s: Text, lang: Text = DEFAULT_LANG) -> List[Text]:
     if not s:
         return []
 
-    local_srch_url = utils.SRCH_URL.format(lang=lang)
+    local_srch_url = SRCH_URL.format(lang=lang)
     data = utils.json_from_url(local_srch_url, s)
     results = [entry["title"] for entry in data["query"]["search"]]
     return results
@@ -29,7 +29,7 @@ def search(s: Text, lang: Text = DEFAULT_LANG) -> List[Text]:
 def random_titles(
     lang: Text = DEFAULT_LANG, max_titles: int = DEFAULT_MAX_QUOTES
 ) -> List[Text]:
-    local_random_url = utils.RANDOM_URL.format(lang=lang, limit=max_titles)
+    local_random_url = RANDOM_URL.format(lang=lang, limit=max_titles)
     data = utils.json_from_url(local_random_url)
     results = [entry["title"] for entry in data["query"]["random"]]
     return results
@@ -39,7 +39,7 @@ def random_titles(
 def quotes(
     page_title: Text, max_quotes: int = DEFAULT_MAX_QUOTES, lang: Text = DEFAULT_LANG
 ) -> List[Text]:
-    local_page_url = utils.PAGE_URL.format(lang=lang)
+    local_page_url = PAGE_URL.format(lang=lang)
     data = utils.json_from_url(local_page_url, page_title)
     if "error" in data:
         raise utils.NoSuchPageException("No pages matched the title: " + page_title)
