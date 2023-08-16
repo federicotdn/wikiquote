@@ -29,16 +29,19 @@ class MissingQOTDException(Exception):
 
 W_URL = "http://{lang}.wikiquote.org/w/api.php"
 SRCH_URL = W_URL + "?format=json&action=query&list=search&continue=&srsearch="
-RANDOM_URL = (
-    W_URL + "?format=json&action=query&list=random&rnnamespace=0&rnlimit={limit}"
-)
-PAGE_URL = (
-    W_URL + "?format=json&action=parse&prop=text|categories&" "disableeditsection&page="
-)
+RANDOM_URL = W_URL + "?format=json&action=query&list=random&rnnamespace=0&rnlimit={limit}"
+PAGE_URL = W_URL + "?format=json&action=parse&prop=text|categories&" "disableeditsection&page="
 MAINPAGE_URL = W_URL + "?format=json&action=parse&prop=text&page="
 
 
 def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
+    """
+    Given a URL that returns JSON, returns a Python dictionary of the parsed JSON.
+
+    :param url: The URL to retrieve
+    :param params: The parameters to pass to the URL
+    :return: A Python dictionary of the parsed JSON
+    """
     if params:
         url += urllib.parse.quote(params)
     res = urllib.request.urlopen(url)
@@ -47,6 +50,12 @@ def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
 
 
 def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
+    """
+    Decorator that validates the language parameter of a function.
+
+    :param fn: The function to decorate
+    :return: The decorated function
+    """
     def internal(*args: Any, **kwargs: Any) -> T:
         lang = kwargs.get("lang")
         if lang and lang not in SUPPORTED_LANGUAGES:
@@ -58,6 +67,12 @@ def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
 
 
 def clean_txt(txt: Text) -> Text:
+    """
+    This function will clean the text of a quote by removing unwanted characters.
+
+    :param txt: The text to clean
+    :return: The cleaned text
+    """
     # Remove unwanted characters
     txt = re.sub(r'«|»|"|“|”', "", txt)
 
@@ -69,12 +84,26 @@ def clean_txt(txt: Text) -> Text:
 
 
 def remove_credit(quote: Text) -> Text:
+    """
+    Remove credits from a wikiquote quote if they exist.
+
+    :param quote: The quote to remove credits from
+    :return: The quote with credits removed
+    """
     if quote.endswith(("–", "-")):
         quote = quote[:-1].rstrip()
     return quote
 
 
 def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
+    """
+    This function will check if a string is a valid quote.
+
+    :param txt: The text to check
+    :param word_blacklist: A list of words to blacklist
+    :return: True if the text is a valid quote, False otherwise
+    :rtype: bool
+    """
     txt_split = txt.split()
     invalid_conditions = [
         txt and txt[0].isalpha() and txt[0].islower(),
@@ -90,6 +119,14 @@ def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
 
 
 def is_quote_node(node: lxml.html.HtmlElement) -> bool:
+    """
+    This function will check if a node is a valid quote. It returns True if the node is a valid quote,
+    False otherwise.
+    - A valid quote is defined as a node that is not a small tag, and is not just a link.
+
+    :param node: The node to check
+    :return: True if the node is a valid quote, False otherwise
+    """
     # Discard nodes with the <small> tag
     if node.find("small") is not None:
         return False
@@ -119,6 +156,16 @@ def extract_quotes_li(
     headings: Optional[List[Text]] = None,
     word_blacklist: Optional[List[Text]] = None,
 ) -> List[Text]:
+    """
+    This function will extract quotes from a list of list items. It returns a list of quotes.
+
+    :param tree: The HTML tree to extract quotes from
+    :param max_quotes: The maximum number of quotes to extract
+    :param headings: A list of headings to skip
+    :param word_blacklist: A list of words to blacklist (skip quotes containing these words)
+    :return: A list of quotes, e.g. ["Quote 1", "Quote 2", ...]
+    """
+
     # Check for quotes inside list items and description lists
     # This function works well for EN, DE and ES versions of Wikiquote articles
     headings = headings or []
