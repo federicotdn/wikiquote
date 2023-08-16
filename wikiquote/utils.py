@@ -63,24 +63,6 @@ def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
     return internal
 
 
-def clean_txt(txt: Text) -> Text:
-    """
-    This function will clean the text of a quote by removing unwanted characters, non-breaking spaces, and
-    leading and trailing newlines/quotes.
-
-    :param txt: The text to clean
-    :return: The cleaned text
-    """
-    # Remove unwanted characters
-    txt = re.sub(r'«|»|"|“|”', "", txt)
-
-    # Remove non-breaking spaces
-    txt = txt.replace("\xa0", "")
-
-    # Remove leading and trailing newlines/quotes
-    return txt.strip()
-
-
 def remove_credit(quote: Text) -> Text:
     """
     Remove credits from a wikiquote quote if they exist. Credits are denoted by a dash or em dash at the
@@ -92,6 +74,104 @@ def remove_credit(quote: Text) -> Text:
     if quote.endswith(("–", "-")):
         quote = quote[:-1].rstrip()
     return quote
+
+
+# ==================================================================================================
+# Extract Functions
+# ==================================================================================================
+
+
+def extract_quotes_li(
+    tree: lxml.html.HtmlElement,
+    max_quotes: int,
+    headings: Optional[List[Text]] = None,
+    word_blacklist: Optional[List[Text]] = None,
+) -> List[Text]:
+    """
+    Extract quotes from a list of list items and return them as a list. This function will only extract
+    quotes from the first max_quotes list items.
+
+    :param tree: The HTML tree to extract quotes from.
+    :param max_quotes: The maximum number of quotes to extract.
+    :param headings: A list of headings to skip.
+    :param word_blacklist: A list of words to blacklist (skip quotes containing these words).
+    :return: A list of quotes, e.g. ["Quote 1", "Quote 2", ...].
+    """
+    remove_toc(tree)
+    quotes_list = []
+    skip_to_next_heading = bool(tree.xpath("//h2|//h3"))
+
+    # Scan for list items and description list tags
+    # Also grab headlines to skip some sections.
+    node_list = tree.xpath("//div/ul/li|//div/dl|//h2|//h3")
+
+    # Iterate through the list items and description list tags
+    # node is a list item or description list tag, e.g.) <li> Quote </li>
+    for node in node_list:
+        if node.tag in ["h2", "h3"]:
+            skip_to_next_heading = check_skip_heading(node, headings or [])
+            continue
+        elif skip_to_next_heading:
+            continue
+
+        # Potential quote is the first child node of the list item
+        potential_quote = extract_potential_quote(node)
+
+        if potential_quote and is_quote(potential_quote, word_blacklist or []):
+            quotes_list.append(potential_quote)
+            if max_quotes == len(quotes_list):
+                break
+
+    return quotes_list
+
+
+# TODO: Add features to extract author pages, disambiguation pages, and other pages
+
+
+# ===================================================================================================
+# Helper functions to extract_quotes_li
+# ===================================================================================================
+
+
+def remove_toc(tree: lxml.html.HtmlElement) -> None:
+    """
+    Remove the table of contents from the given HTML tree.
+
+    :param tree: The HTML tree.
+    """
+    for toc in tree.xpath('//div[@id="toc"]'):
+        toc.getparent().remove(toc)
+
+
+def check_skip_heading(node: lxml.html.HtmlElement, headings: List[Text]) -> bool:
+    """
+    Determine if we should skip the quotes under a given heading.
+
+    :param node: The heading node.
+    :param headings: List of headings to be checked.
+    :return: True if the heading indicates skipping, False otherwise.
+    """
+    return any(node.text_content().lower().startswith(unwanted.lower()) for unwanted in headings)
+
+
+def extract_potential_quote(node: lxml.html.HtmlElement) -> Optional[Text]:
+    """
+    Extract a potential quote from a given node.
+
+    :param node: The node potentially containing a quote.
+    :return: Extracted quote or None if not found.
+    """
+    if node.tag == "dl":
+        dds = node.xpath("dd")
+        if all(is_quote_node(dd) for dd in dds):
+            return clean_txt("\n".join(dd.text_content().strip() for dd in dds))
+        return None
+
+    # Remove nested uls (unordered lists) from the node, if any
+    for ul in node.xpath("ul"):
+        ul.getparent().remove(ul)
+
+    return clean_txt(" ".join(node.text_content().split())) if is_quote_node(node) else None
 
 
 def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
@@ -155,82 +235,19 @@ def is_quote_node(node: lxml.html.HtmlElement) -> bool:
     return True
 
 
-def extract_quotes_li(
-    tree: lxml.html.HtmlElement,
-    max_quotes: int,
-    headings: Optional[List[Text]] = None,
-    word_blacklist: Optional[List[Text]] = None,
-) -> List[Text]:
+def clean_txt(txt: Text) -> Text:
     """
-    This function will extract quotes from a list of list items. It returns a list of quotes.
+    This function will clean the text of a quote by removing unwanted characters, non-breaking spaces, and
+    leading and trailing newlines/quotes.
 
-    :param tree: The HTML tree to extract quotes from
-    :param max_quotes: The maximum number of quotes to extract
-    :param headings: A list of headings to skip
-    :param word_blacklist: A list of words to blacklist (skip quotes containing these words)
-    :return: A list of quotes, e.g. ["Quote 1", "Quote 2", ...]
+    :param txt: The text to clean
+    :return: The cleaned text
     """
+    # Remove unwanted characters
+    txt = re.sub(r'«|»|"|“|”', "", txt)
 
-    # Check for quotes inside list items and description lists
-    # This function works well for EN, DE and ES versions of Wikiquote articles
-    headings = headings or []
-    word_blacklist = word_blacklist or []
-    quotes_list = []
+    # Remove non-breaking spaces
+    txt = txt.replace("\xa0", "")
 
-    # Remove table of contents
-    toc_list = tree.xpath('//div[@id="toc"]')
-    for toc in toc_list:
-        toc.getparent().remove(toc)
-
-    # Scan for list items and description list tags
-    # Also grab headlines to skip some sections.
-    node_list = tree.xpath("//div/ul/li|//div/dl|//h2|//h3")
-
-    # Skip all quotes above the first heading, if there are any headings
-    skip_to_next_heading = bool(tree.xpath("//h2|//h3"))
-
-    for node in node_list:
-        if node.tag not in ["h2", "h3"] and skip_to_next_heading:
-            continue
-
-        if node.tag in ["h2", "h3"]:
-            skip_to_next_heading = False
-            heading_text = node.text_content().lower()
-
-            # Commence skipping
-            for unwanted_heading in headings:
-                if heading_text.startswith(unwanted_heading.lower()):
-                    skip_to_next_heading = True
-
-            continue
-
-        potential_quote = None
-
-        if node.tag == "dl":
-            # <dl>'s are assumed to be multi-line dialogue
-            dds = node.xpath("dd")
-
-            if not all(is_quote_node(dd) for dd in dds):
-                continue
-
-            full_dialogue = "\n".join(dd.text_content().strip() for dd in dds)
-
-            potential_quote = clean_txt(full_dialogue)
-        else:
-            # Handle <li>'s
-            uls = node.xpath("ul")
-            for ul in uls:
-                ul.getparent().remove(ul)
-
-            if not is_quote_node(node):
-                continue
-
-            txt = " ".join(node.text_content().split())
-            potential_quote = clean_txt(txt)
-
-        if potential_quote and is_quote(potential_quote, word_blacklist):
-            quotes_list.append(potential_quote)
-            if max_quotes == len(quotes_list):
-                break
-
-    return quotes_list
+    # Remove leading and trailing newlines/quotes
+    return txt.strip()
