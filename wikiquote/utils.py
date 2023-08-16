@@ -5,7 +5,7 @@ import json
 import lxml
 import re
 
-from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
+from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS, MAINPAGE_URL, PAGE_URL, RANDOM_URL, SRCH_URL, W_URL
 from .langs import SUPPORTED_LANGUAGES
 
 T = TypeVar("T")
@@ -27,16 +27,10 @@ class MissingQOTDException(Exception):
     pass
 
 
-W_URL = "http://{lang}.wikiquote.org/w/api.php"
-SRCH_URL = W_URL + "?format=json&action=query&list=search&continue=&srsearch="
-RANDOM_URL = W_URL + "?format=json&action=query&list=random&rnnamespace=0&rnlimit={limit}"
-PAGE_URL = W_URL + "?format=json&action=parse&prop=text|categories&" "disableeditsection&page="
-MAINPAGE_URL = W_URL + "?format=json&action=parse&prop=text&page="
-
-
 def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
     """
-    Given a URL that returns JSON, returns a Python dictionary of the parsed JSON.
+    Given a URL that returns JSON, returns a Python dictionary of the parsed JSON by making an HTTP GET
+    request to the url with the given params.
 
     :param url: The URL to retrieve
     :param params: The parameters to pass to the URL
@@ -51,12 +45,15 @@ def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
 
 def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
     """
-    Decorator that validates the language parameter of a function.
+    Decorator function to validate the language parameter of a function by checking if it is in
+    SUPPORTED_LANGUAGES.
 
     :param fn: The function to decorate
     :return: The decorated function
     """
+
     def internal(*args: Any, **kwargs: Any) -> T:
+        """Helper function to validate the language parameter of a function."""
         lang = kwargs.get("lang")
         if lang and lang not in SUPPORTED_LANGUAGES:
             raise UnsupportedLanguageException("Unsupported language: {}".format(lang))
@@ -68,7 +65,8 @@ def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
 
 def clean_txt(txt: Text) -> Text:
     """
-    This function will clean the text of a quote by removing unwanted characters.
+    This function will clean the text of a quote by removing unwanted characters, non-breaking spaces, and
+    leading and trailing newlines/quotes.
 
     :param txt: The text to clean
     :return: The cleaned text
@@ -85,7 +83,8 @@ def clean_txt(txt: Text) -> Text:
 
 def remove_credit(quote: Text) -> Text:
     """
-    Remove credits from a wikiquote quote if they exist.
+    Remove credits from a wikiquote quote if they exist. Credits are denoted by a dash or em dash at the
+    end of the quote.
 
     :param quote: The quote to remove credits from
     :return: The quote with credits removed
@@ -97,7 +96,13 @@ def remove_credit(quote: Text) -> Text:
 
 def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
     """
-    This function will check if a string is a valid quote.
+    This function will check if a string is a valid quote. A valid quote is defined as a string that:
+    - Does not start with a lowercase letter
+    - Is at least MIN_QUOTE_LEN characters long
+    - Is at least MIN_QUOTE_WORDS words long
+    - Does not contain any words in the word_blacklist
+    - Does not end with a colon, parenthesis, or bracket
+    - Does not start with a parenthesis
 
     :param txt: The text to check
     :param word_blacklist: A list of words to blacklist
