@@ -97,12 +97,9 @@ def extract_quotes_li(
     :param word_blacklist: A list of words to blacklist (skip quotes containing these words).
     :return: A list of quotes, e.g. ["Quote 1", "Quote 2", ...].
     """
-    remove_toc(tree)
+    remove_toc(tree)  # Remove table of contents
     quotes_list = []
     skip_to_next_heading = bool(tree.xpath("//h2|//h3"))
-
-    # Scan for list items and description list tags
-    # Also grab headlines to skip some sections.
     node_list = tree.xpath("//div/ul/li|//div/dl|//h2|//h3")
 
     # Iterate through the list items and description list tags
