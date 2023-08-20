@@ -1,9 +1,10 @@
-from typing import List, Text, Optional, Dict, Any, Callable, TypeVar
-import urllib.request
-import urllib.parse
 import json
-import lxml
 import re
+import urllib.parse
+import urllib.request
+from typing import Any, Callable, Dict, List, Optional, Text, TypeVar
+
+import lxml
 
 from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
 from .langs import SUPPORTED_LANGUAGES
@@ -29,8 +30,8 @@ class MissingQOTDException(Exception):
 
 def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
     """
-    Given a URL that returns JSON, returns a Python dictionary of the parsed JSON by making an HTTP GET
-    request to the url with the given params.
+    Given a URL that returns JSON, returns a Python dictionary of the parsed JSON by
+    making an HTTP GET request to the url with the given params.
 
     :param url: The URL to retrieve
     :param params: The parameters to pass to the URL
@@ -45,8 +46,8 @@ def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
 
 def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
     """
-    Decorator function to validate the language parameter of a function by checking if it is in
-    SUPPORTED_LANGUAGES.
+    Decorator function to validate the language parameter of a function by checking if
+    it is in SUPPORTED_LANGUAGES.
 
     :param fn: The function to decorate
     :return: The decorated function
@@ -65,8 +66,8 @@ def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
 
 def remove_credit(quote: Text) -> Text:
     """
-    Remove credits from a wikiquote quote if they exist. Credits are denoted by a dash or em dash at the
-    end of the quote.
+    Remove credits from a wikiquote quote if they exist. Credits are denoted by a dash
+    or em dash at the end of the quote.
 
     :param quote: The quote to remove credits from
     :return: The quote with credits removed
@@ -88,13 +89,14 @@ def extract_quotes_li(
     word_blacklist: Optional[List[Text]] = None,
 ) -> List[Text]:
     """
-    Extract quotes from a list of list items and return them as a list. This function will only extract
-    quotes from the first max_quotes list items.
+    Extract quotes from a list of list items and return them as a list. This function
+    will only extract quotes from the first max_quotes list items.
 
     :param tree: The HTML tree to extract quotes from.
     :param max_quotes: The maximum number of quotes to extract.
     :param headings: A list of headings to skip.
-    :param word_blacklist: A list of words to blacklist (skip quotes containing these words).
+    :param word_blacklist: A list of words to blacklist (skip quotes containing these
+    words).
     :return: A list of quotes, e.g. ["Quote 1", "Quote 2", ...].
     """
     remove_toc(tree)  # Remove table of contents
@@ -146,7 +148,10 @@ def check_skip_heading(node: lxml.html.HtmlElement, headings: List[Text]) -> boo
     :param headings: List of headings to be checked.
     :return: True if the heading indicates skipping, False otherwise.
     """
-    return any(node.text_content().lower().startswith(unwanted.lower()) for unwanted in headings)
+    return any(
+        node.text_content().lower().startswith(unwanted.lower())
+        for unwanted in headings
+    )
 
 
 def extract_potential_quote(node: lxml.html.HtmlElement) -> Optional[Text]:
@@ -166,12 +171,17 @@ def extract_potential_quote(node: lxml.html.HtmlElement) -> Optional[Text]:
     for ul in node.xpath("ul"):
         ul.getparent().remove(ul)
 
-    return clean_txt(" ".join(node.text_content().split())) if is_quote_node(node) else None
+    return (
+        clean_txt(" ".join(node.text_content().split()))
+        if is_quote_node(node)
+        else None
+    )
 
 
 def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
     """
-    This function will check if a string is a valid quote. A valid quote is defined as a string that:
+    This function will check if a string is a valid quote. A valid quote is defined as a
+    string that:
     - Does not start with a lowercase letter
     - Is at least MIN_QUOTE_LEN characters long
     - Is at least MIN_QUOTE_WORDS words long
@@ -200,9 +210,10 @@ def is_quote(txt: Text, word_blacklist: List[Text]) -> bool:
 
 def is_quote_node(node: lxml.html.HtmlElement) -> bool:
     """
-    This function will check if a node is a valid quote. It returns True if the node is a valid quote,
-    False otherwise.
-    - A valid quote is defined as a node that is not a small tag, and is not just a link.
+    This function will check if a node is a valid quote. It returns True if the node is
+    a valid quote, False otherwise.
+    - A valid quote is defined as a node that is not a small tag, and is not just a
+      link.
 
     :param node: The node to check
     :return: True if the node is a valid quote, False otherwise
@@ -229,8 +240,8 @@ def is_quote_node(node: lxml.html.HtmlElement) -> bool:
 
 def clean_txt(txt: Text) -> Text:
     """
-    This function will clean the text of a quote by removing unwanted characters, non-breaking spaces, and
-    leading and trailing newlines/quotes.
+    This function will clean the text of a quote by removing unwanted characters,
+    non-breaking spaces, and leading and trailing newlines/quotes.
 
     :param txt: The text to clean
     :return: The cleaned text

@@ -1,10 +1,9 @@
-from typing import List, Text, Dict, Any
+from typing import Any, Dict, List, Text
 
 import lxml.html
 
-from . import utils
-from . import langs
-from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES, SRCH_URL, RANDOM_URL, PAGE_URL
+from . import langs, utils
+from .constants import DEFAULT_LANG, DEFAULT_MAX_QUOTES, PAGE_URL, RANDOM_URL, SRCH_URL
 
 
 def _is_disambiguation(categories: List[Dict[Text, Any]]) -> bool:

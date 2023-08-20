@@ -1,9 +1,8 @@
-from typing import Tuple, Text
+from typing import Text, Tuple
 
 import lxml.html
 
-from . import utils
-from . import langs
+from . import langs, utils
 from .constants import DEFAULT_LANG, MAINPAGE_URL
 
 

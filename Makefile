@@ -10,9 +10,11 @@ types:
 	mypy wikiquote
 
 format:
+	isort wikiquote tests
 	black wikiquote tests
 
 lint:
+	isort --check wikiquote tests
 	black --check wikiquote tests
 	flake8 wikiquote tests
 

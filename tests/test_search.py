@@ -1,7 +1,7 @@
-import wikiquote
 import unittest
-
 from collections import defaultdict
+
+import wikiquote
 
 
 class SearchTest(unittest.TestCase):
@@ -10,7 +10,6 @@ class SearchTest(unittest.TestCase):
     """
 
     def test_search(self):
-
         query_by_lang = defaultdict(lambda: "Matrix")
         special_cases = {
             # The hebrew wikiquote doesn't support searches in English

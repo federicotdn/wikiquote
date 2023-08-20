@@ -1,7 +1,7 @@
-import wikiquote
 import unittest
-
 from collections import defaultdict
+
+import wikiquote
 
 
 class QuotesTest(unittest.TestCase):
@@ -24,7 +24,6 @@ class QuotesTest(unittest.TestCase):
             wikiquote.quotes("Matrix", lang="foobar")
 
     def test_normal_quotes(self):
-
         query_by_lang = defaultdict(lambda: "Barack Obama")
         # Special case: The hebrew wikiquote doesn't support searches in English
         query_by_lang["he"] = "ברק אובמה"

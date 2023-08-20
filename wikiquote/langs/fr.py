@@ -1,7 +1,6 @@
-from typing import List, Text, Tuple
-
 import logging
 import re
+from typing import List, Text, Tuple
 
 import lxml
 
@@ -32,7 +31,7 @@ def qotd_old_method(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
 def qotd_new_method(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     tree = html_tree.get_element_by_id("mf-cdj")
     lines = [
-        line.strip().replace(u"\xa0", " ") for line in tree.text_content().splitlines()
+        line.strip().replace("\xa0", " ") for line in tree.text_content().splitlines()
     ]
 
     for line in lines:

@@ -1,5 +1,6 @@
-import wikiquote
 import unittest
+
+import wikiquote
 
 
 class SearchTest(unittest.TestCase):

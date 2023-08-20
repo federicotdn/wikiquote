@@ -1,5 +1,5 @@
-from typing import List, Text, Tuple
 import re
+from typing import List, Text, Tuple
 
 import lxml
 

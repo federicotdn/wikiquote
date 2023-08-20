@@ -1,10 +1,9 @@
-from typing import List, Text, Tuple
-import os
 import glob
 import importlib
+import os
+from typing import List, Text, Tuple
 
 import lxml
-
 
 modules = [
     os.path.basename(m)[:-3]

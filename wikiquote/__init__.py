@@ -1,14 +1,14 @@
 from typing import List, Text
 
-from .quotes import quotes, random_titles, search
+from . import langs
 from .qotd import quote_of_the_day
+from .quotes import quotes, random_titles, search
 from .utils import (
     DisambiguationPageException,
+    MissingQOTDException,
     NoSuchPageException,
     UnsupportedLanguageException,
-    MissingQOTDException,
 )
-from . import langs
 
 
 def supported_languages() -> List[Text]:
