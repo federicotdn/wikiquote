@@ -70,7 +70,7 @@ Use the `lang` parameter to specify the language (defaults to `en`):
 # 'Le plus lourd fardeau, c'est d'exister sans vivre.'
 
 >>> wikiquote.quotes('Nueve reinas', lang='es')[0]
-# 'Más ofendido estás... menos sospechoso pareces.'
+# 'Más ofendido estás... menos sospechoso parecés.'
 
 >>> wikiquote.quote_of_the_day(lang='es')
 # 'He sospechado alguna vez que la única cosa sin misterio es la felicidad, porque se justifica por sí sola.', 'Jorge Luis Borges'
