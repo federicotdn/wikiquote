@@ -5,14 +5,12 @@
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
 ![Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
-The `wikiquote` package for Python 3.X allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, as well as retrieve the quote of the day.
-
-Please keep in mind that due to Wikiquote's varying HTML article layouts, some quotes may not be retrieved correctly. If you wish to collaborate, head over to the [Developing](https://github.com/federicotdn/python-wikiquotes#developing) section below. 
+The `wikiquote` package for Python (>=3.8) allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, as well as retrieve the quote of the day.
 
 ## Installation
 You can install the `wikiquote` package using `pip`:
 ```bash
-$ pip3 install --upgrade wikiquote
+$ pip install --upgrade wikiquote
 ```
 
 ## Usage
@@ -100,24 +98,30 @@ Use `random.choice()` to select a random quote from an article:
 ```
 
 ## Caveats
-As mentioned in the introduction, `wikiquote` may fail to retrieve quotes from some articles. This is due to Wikiquote.org's varying internal article layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article.
+In some cases, `wikiquote` may fail to retrieve quotes from some articles, or the quote of the day (QOTD). This is due to Wikiquote.org's varying internal article layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article and the language.
 
 ## Developing
-First, check that all tests pass:
+First, make sure you have installed all necessary dependencies, including development dependencies:
+```bash
+$ pip install -r requirements-dev.txt -r requirements.txt
+```
+
+Then, check that all files are correctly formatted, and that the type hints are also correct:
+```bash
+$ make lint
+$ make types
+```
+
+After that, check that all tests pass:
 ```bash
 $ make test
 ```
-After that, check that the `wikiquote` package follows the PEP 8 conventions:
-```bash
-$ pip3 install -r requirements-dev.txt
-$ make lint
-```
+Some tests may be skipped in the QOTD is not available for some languages.
+
 Finally, create a pull request stating your changes.
 
 ## Changelog
 See the [CHANGELOG.md](CHANGELOG.md) file.
 
-## Pending Tasks
-- [ ] Improve the way quotes are searched for in the HTML articles, avoid returning things like external references, links or notes from quotes.
-- [ ] Add more/better tests (for example, check that returned quotes do not contain characters like '(' or ')').
-- [ ] Add support for more languages: each language may require a different scrapping method.
+## License
+The `wikiquote` package is licensed under the MIT License.
