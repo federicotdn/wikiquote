@@ -4,10 +4,15 @@ import urllib.parse
 import urllib.request
 from typing import Any, Callable, Dict, List, Optional, Text, TypeVar
 
-import lxml
+try:
+    import lxml
 
+    lxml.html
+except AttributeError:
+    import lxml.html
+
+from . import langs
 from .constants import MIN_QUOTE_LEN, MIN_QUOTE_WORDS
-from .langs import SUPPORTED_LANGUAGES
 
 T = TypeVar("T")
 
@@ -56,7 +61,7 @@ def validate_lang(fn: Callable[..., T]) -> Callable[..., T]:
     def internal(*args: Any, **kwargs: Any) -> T:
         """Helper function to validate the language parameter of a function."""
         lang = kwargs.get("lang")
-        if lang and lang not in SUPPORTED_LANGUAGES:
+        if lang and lang not in langs.SUPPORTED_LANGUAGES:
             raise UnsupportedLanguageException("Unsupported language: {}".format(lang))
 
         return fn(*args, **kwargs)
