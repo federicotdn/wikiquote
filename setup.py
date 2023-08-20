@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = "0.1.16"
+VERSION = "0.1.17"
 
 
 with open("requirements.txt") as f:
@@ -19,7 +19,7 @@ setup(
     author="Federico Tedin",
     author_email="federicotedin@gmail.com",
     install_requires=requires,
-    python_requires=">=3.6, <4",
+    python_requires=">=3.8, <4",
     url="https://github.com/federicotdn/wikiquote",
     download_url="https://github.com/federicotdn/wikiquote/archive/{}.tar.gz".format(
         VERSION

@@ -1,4 +1,7 @@
 # Changelog for `wikiquote`
+## **0.1.17** - 20/08/2023
+- Dropped support for Python 3.6 and 3.7 (3.8 is now the minimum).
+
 ## **0.1.16** - 28/07/2021
 - Added support for Basque language.
 - Fixed QOTD for French language (added secondary extraction method).
