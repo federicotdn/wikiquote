@@ -4,13 +4,13 @@ import lxml
 
 from .. import utils
 
-WORD_BLACKLIST = ["quoted", "Variant:", "Retrieved", "Notes:", "article:"]
+WORD_BLOCKLIST = ["quoted", "Variant:", "Retrieved", "Notes:", "article:"]
 MAIN_PAGE = "Main Page"
 HEADINGS = ["cast", "see also", "external links", "about"]
 
 
 def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
-    q_lst = utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
+    q_lst = utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLOCKLIST)
     return [utils.remove_credit(q) for q in q_lst]
 
 

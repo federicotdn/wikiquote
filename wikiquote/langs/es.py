@@ -5,12 +5,12 @@ import lxml
 from .. import utils
 
 MAIN_PAGE = "Portada"
-WORD_BLACKLIST = ["Fuente:", "Traducción:", "Nota:"]
+WORD_BLOCKLIST = ["Fuente:", "Traducción:", "Nota:"]
 HEADINGS = ["enlaces externos", "referencias"]
 
 
 def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
-    return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
+    return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLOCKLIST)
 
 
 def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:

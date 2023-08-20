@@ -5,7 +5,7 @@ import lxml
 from .. import utils
 
 MAIN_PAGE = "Página_principal"
-WORD_BLACKLIST = ["Fonte"]
+WORD_BLOCKLIST = ["Fonte"]
 HEADINGS = ["Veja também", "Referências"]
 
 
@@ -15,7 +15,7 @@ def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
     for dl in dl_list:
         dl.getparent().remove(dl)
 
-    return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
+    return utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLOCKLIST)
 
 
 def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:

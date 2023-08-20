@@ -5,7 +5,7 @@ import lxml
 
 from .. import utils
 
-WORD_BLACKLIST: List[Text] = []
+WORD_BLOCKLIST: List[Text] = []
 MAIN_PAGE = "Hauptseite"
 HEADINGS = ["Überprüft"]
 
@@ -18,7 +18,7 @@ def remove_i_tags(tree: lxml.html.HtmlElement) -> None:
 def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
     remove_i_tags(tree)
 
-    q_lst = utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLACKLIST)
+    q_lst = utils.extract_quotes_li(tree, max_quotes, HEADINGS, WORD_BLOCKLIST)
     return [utils.remove_credit(q) for q in q_lst]
 
 
