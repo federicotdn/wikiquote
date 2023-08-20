@@ -4,14 +4,14 @@ import lxml.html
 
 from . import utils
 from . import langs
-from .constants import DEFAULT_LANG
+from .constants import DEFAULT_LANG, MAINPAGE_URL
 
 
 @utils.validate_lang
 def quote_of_the_day(lang: Text = DEFAULT_LANG) -> Tuple[Text, Text]:
     main_page = langs.main_page_lang(lang)
 
-    data = utils.json_from_url(utils.MAINPAGE_URL.format(lang=lang), main_page)
+    data = utils.json_from_url(MAINPAGE_URL.format(lang=lang), main_page)
     html_tree = lxml.html.fromstring(data["parse"]["text"]["*"])
 
     try:
