@@ -23,4 +23,4 @@ def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     raw_author = quote_container[1].xpath("td/div/a")[0].text_content()
     author = raw_author.strip()
 
-    return quote, author
+    return utils.clean_txt(quote), author
