@@ -8,7 +8,7 @@
 The `wikiquote` package for Python (>=3.8) allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, as well as retrieve the quote of the day.
 
 ## Installation
-You can install the `wikiquote` package using `pip`:
+You can install the `wikiquote` package using, for example, `pip`:
 ```bash
 $ pip install --upgrade wikiquote
 ```
@@ -101,20 +101,23 @@ Use `random.choice()` to select a random quote from an article:
 In some cases, `wikiquote` may fail to retrieve quotes from some articles, or the quote of the day (QOTD). This is due to Wikiquote.org's varying internal article layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article and the language.
 
 ## Developing
+[Poetry](https://python-poetry.org/) is required to develop `wikiquote`.
+
 First, make sure you have installed all necessary dependencies, including development dependencies:
 ```bash
-$ pip install -r requirements-dev.txt -r requirements.txt
+$ poetry install
 ```
 
 Then, check that all files are correctly formatted, and that the type hints are also correct:
 ```bash
-$ make lint
-$ make types
+$ poetry run make lint
+$ poetry run make install-types
+$ poetry run make types
 ```
 
 After that, check that all tests pass:
 ```bash
-$ make test
+$ poetry run make test
 ```
 Some tests may be skipped in the QOTD is not available for some languages.
 
