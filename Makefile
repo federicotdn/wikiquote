@@ -22,7 +22,7 @@ format:
 lint:
 	isort --check wikiquote tests
 	black --check wikiquote tests
-	flake8 wikiquote tests
+	ruff wikiquote tests
 
 package:
 	mkdir -p dist
