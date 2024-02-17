@@ -28,7 +28,7 @@ jobs:
         run: poetry run make lint
       - name: Check types using MyPy
         run: |
-          poetry run mypy --install-types --non-interactive
+          poetry run make install-types
           poetry run make types
       - name: Run pytest
         run: poetry run make test

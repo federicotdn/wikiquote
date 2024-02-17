@@ -9,8 +9,11 @@ clean:
 test:
 	pytest tests -vvv -rs
 
+install-types:
+	mypy wikiquote --install-types --non-interactive
+
 types:
-	mypy wikiquote --install-types
+	mypy wikiquote
 
 format:
 	isort wikiquote tests
