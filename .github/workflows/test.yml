@@ -9,35 +9,26 @@ on:
 
 jobs:
   test:
-    name: Run tests
+    name: Lint and test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python_version: [3.8, 3.11]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python_version }}
-      - name: Install dependencies
-        run: pip install -r requirements.txt -r requirements-dev.txt
-      - name: Run pytest
-        run: make test
-
-  lint:
-    name: Run format/linter/types
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python_version: [3.8, 3.11]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: snok/install-poetry@v1
         with:
-          python-version: ${{ matrix.python_version }}
+          installer-parallel: true
       - name: Install dependencies
-        run: pip install -r requirements.txt -r requirements-dev.txt
+        run: poetry install --no-interaction
       - name: Check Black formatting and flake8 rules
-        run: make lint
+        run: poetry run make lint
       - name: Check types using MyPy
-        run: make types
+        run: |
+          poetry run mypy --install-types --non-interactive
+          poetry run make types
+      - name: Run pytest
+        run: poetry run make test

@@ -1,13 +1,16 @@
 # Makefile for federicotdn/wikiquote
 
 manual_checks:
-	PYTHONPATH=$$(pwd) python3 util/manual_checks.py 
+	PYTHONPATH=$$(pwd) python3 util/manual_checks.py
+
+clean:
+	rm -rf wikiquote.egg-info dist
 
 test:
 	pytest tests -vvv -rs
 
 types:
-	mypy wikiquote
+	mypy wikiquote --install-types
 
 format:
 	isort wikiquote tests
