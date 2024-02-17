@@ -25,9 +25,8 @@ lint:
 	ruff wikiquote tests
 
 package:
-	mkdir -p dist
-	rm -rf dist/*
-	python3 setup.py sdist
+	make clean
+	poetry build
 
 upload: package
 	twine upload dist/*
