@@ -15,14 +15,9 @@ install-types:
 types:
 	mypy wikiquote
 
-format:
-	isort wikiquote tests
-	black wikiquote tests
-
 lint:
-	isort --check wikiquote tests
-	black --check wikiquote tests
-	ruff wikiquote tests
+	ruff check --fix --output-format=full --show-fixes wikiquote tests
+	ruff format wikiquote tests
 
 package:
 	make clean

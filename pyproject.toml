@@ -15,8 +15,6 @@ python = "^3.8"
 lxml = "^4.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "==23.7.0"
-isort = "==5.12.0"
 ruff = "*"
 pytest = "*"
 mypy = "*"
@@ -26,8 +24,8 @@ twine = "*"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+lint.extend-select = ["I"]
 
 [tool.mypy]
 warn_unused_configs = true

@@ -24,7 +24,7 @@ jobs:
           installer-parallel: true
       - name: Install dependencies
         run: poetry install --no-interaction
-      - name: Check Black formatting and flake8 rules
+      - name: Lint code
         run: poetry run make lint
       - name: Check types using MyPy
         run: |
