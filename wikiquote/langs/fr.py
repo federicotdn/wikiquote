@@ -53,4 +53,22 @@ def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     except Exception as e:
         logger.warning("Could not extract French QOTD using new method due to: %s", e)
 
+    try:
+        return qotd_by_qotd_lang_title(html_tree)
+    except Exception as e:
+        logger.warning("Could not extract French QOTD using qotd_by_qotd_lang_title method due to: %s", e)
     return qotd_old_method(html_tree)
+
+
+def qotd_by_qotd_lang_title(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
+    """Uses QOTD title (translated in lang) to traverse tree and find quotation and author"""
+    tree = html_tree.xpath('.//*[text()="Citation au hasard"]')[0]
+    quote_author_parts = tree.xpath('..//..//*')[0].getnext().xpath('.//text()')
+    quote_author_line = ''.join(quote_author_parts)    
+    quote_author_line = quote_author_line.strip().replace('\xa0', ' ').replace('\n', ' ')
+    quote_author_line = ''.join(c for c in quote_author_line if c.isprintable()) # Remove unprintable chars
+    matches = re.search(r"^(.*?)—(.*?)$", quote_author_line)
+    if matches:
+        quote = matches.group(1).strip()
+        author = matches.group(2).strip()
+    return quote, author
