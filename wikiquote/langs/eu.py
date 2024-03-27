@@ -34,4 +34,17 @@ def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
     except Exception as e:
         logger.warning("Could not extract eu QOTD using qotd_by_element_id due to: %s", e)
 
+    try:
+        return qotd_by_qotd_lang_title(html_tree)
+    except Exception as e:
+        logger.warning("Could not extract eu QOTD using qotd_by_qotd_lang_title due to: %s", e)
+
     raise utils.MissingQOTDException('Could not extract: All Attempts failed')
+
+
+def qotd_by_qotd_lang_title(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
+    tree = html_tree.xpath('.//*[text()="Asteko aipua"]')[0].getparent()
+    quote_author = tree.xpath('./following-sibling::*//table//tbody//tr//td//text()')
+    quote = quote_author[0].split("~")[0].strip().replace('"', '')
+    author = quote_author[1].strip()
+    return quote, author
