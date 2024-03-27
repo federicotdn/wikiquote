@@ -13,7 +13,13 @@ def extract_quotes(tree: lxml.html.HtmlElement, max_quotes: int) -> List[Text]:
 
 
 def qotd(html_tree: lxml.html.HtmlElement) -> Tuple[Text, Text]:
-    qotd_title = html_tree.xpath('.//div[text()="Cytat dnia"]')[0]
+    qotd_lang_title = 'Cytat dnia'
+    qotd_title_query = html_tree.xpath(f'.//div[text()="{qotd_lang_title}"]')
+    if qotd_title_query:
+        qotd_title = qotd_title_query[0]
+    else:
+        qotd_title = html_tree.xpath(f'.//span[text()="{qotd_lang_title}"]')[0].getparent()
+
     qotd_element = qotd_title.getnext()
     qotd_components = qotd_element.xpath("table/tbody/tr")
 
