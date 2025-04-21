@@ -1,28 +1,43 @@
-[tool.poetry]
+[project]
 name = "wikiquote"
 version = "0.1.17"
 description = "Retrieve quotes from any Wikiquote article."
-authors = ["Federico Tedin <federicotedin@gmail.com>"]
-license = "MIT"
+authors = [{ name = "Federico Tedin", email = "federicotedin@gmail.com" }]
+requires-python = "~=3.8"
 readme = "README.md"
-keywords = ["quotes", "wikiquote", "python", "api", "qotd", "quote", "day"]
-classifiers = ["Programming Language :: Python :: 3 :: Only", "License :: OSI Approved :: MIT License", "Topic :: Utilities"]
-repository = "https://github.com/federicotdn/wikiquote"
-homepage = "https://github.com/federicotdn/wikiquote"
+license = "MIT"
+keywords = [
+    "quotes",
+    "wikiquote",
+    "python",
+    "api",
+    "qotd",
+    "quote",
+    "day",
+]
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Utilities",
+]
+dependencies = ["lxml~=4.2"]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-lxml = "^4.2"
+[project.urls]
+Homepage = "https://github.com/federicotdn/wikiquote"
+Repository = "https://github.com/federicotdn/wikiquote"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "*"
-pytest = "*"
-mypy = "*"
-twine = "*"
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+    "mypy",
+    "twine",
+    "lxml-stubs"
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 lint.extend-select = ["I"]

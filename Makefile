@@ -21,7 +21,7 @@ lint:
 
 package:
 	make clean
-	poetry build
+	uv build
 
 upload: package
 	twine upload dist/*

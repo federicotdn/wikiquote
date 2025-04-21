@@ -1,6 +1,7 @@
 """
 Test wikiquote.quote_of_the_day()
 """
+
 import pytest
 
 import wikiquote

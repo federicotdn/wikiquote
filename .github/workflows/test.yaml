@@ -19,16 +19,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python_version }}
-      - uses: snok/install-poetry@v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          installer-parallel: true
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: poetry install --no-interaction
+        run: uv sync --all-extras --dev
       - name: Lint code
-        run: poetry run make lint
+        run: uv run make lint
       - name: Check types using MyPy
-        run: |
-          poetry run make install-types
-          poetry run make types
+        run: uv run make types
       - name: Run pytest
-        run: poetry run make test
+        run: uv run make test

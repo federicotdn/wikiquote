@@ -101,23 +101,22 @@ Use `random.choice()` to select a random quote from an article:
 In some cases, `wikiquote` may fail to retrieve quotes from some articles, or the quote of the day (QOTD). This is due to Wikiquote.org's varying internal article layouts: some quotes may be contained in `div` elements, others in `li`, etc. depending on the article and the language.
 
 ## Developing
-[Poetry](https://python-poetry.org/) is required to develop `wikiquote`.
+[uv](https://docs.astral.sh/uv/) is required to develop `wikiquote`.
 
 First, make sure you have installed all necessary dependencies, including development dependencies:
 ```bash
-$ poetry install
+$ uv sync
 ```
 
 Then, check that all files are correctly formatted, and that the type hints are also correct:
 ```bash
-$ poetry run make lint
-$ poetry run make install-types
-$ poetry run make types
+$ uv run make lint
+$ uv run make types
 ```
 
 After that, check that all tests pass:
 ```bash
-$ poetry run make test
+$ uv run make test
 ```
 Some tests may be skipped in the QOTD is not available for some languages.
 
