@@ -124,5 +124,7 @@ Finally, create a pull request stating your changes.
 ## Changelog
 See the [CHANGELOG.md](CHANGELOG.md) file.
 
+The `wikiquote` package has been actively maintained for 10+ years 🎉
+
 ## License
 The `wikiquote` package is licensed under the MIT License.
