@@ -1,9 +1,8 @@
 # wikiquote
 [![CI Status](https://github.com/federicotdn/wikiquote/workflows/CI/badge.svg)](https://github.com/federicotdn/wikiquote/actions)
 ![License](https://img.shields.io/pypi/l/wikiquote.svg?style=flat)
-![](https://img.shields.io/badge/python-3-blue.svg)
 [![Version](https://img.shields.io/pypi/v/wikiquote.svg?style=flat)](https://pypi.python.org/pypi/wikiquote)
-![Black](https://img.shields.io/badge/code%20style-black-000000.svg)
+![Black](https://img.shields.io/badge/code%20style-ruff-000000.svg)
 
 The `wikiquote` package for Python (>=3.8) allows you to search and retrieve quotes from any [Wikiquote](https://www.wikiquote.org/) article, as well as retrieve the quote of the day.
 
