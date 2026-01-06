@@ -24,7 +24,7 @@ package:
 	uv build
 
 upload: package
-	twine upload dist/*
+	uv run twine upload dist/*
 
 repl:
 	uv run python -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'
