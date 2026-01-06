@@ -1,6 +1,6 @@
 [project]
 name = "wikiquote"
-version = "0.1.17"
+version = "0.1.18"
 description = "Retrieve quotes from any Wikiquote article."
 authors = [{ name = "Federico Tedin", email = "federicotedin@gmail.com" }]
 requires-python = ">=3.9,<4"

@@ -1,4 +1,12 @@
 # Changelog for `wikiquote`
+## **0.1.18** - 06/01/2026
+- Dropped support for Python 3.8 (3.9 is now the minimum).
+- Fixed QOTD for English language.
+- Clean up QOTD text for Spanish language before returning it.
+- Fixed 401 errors on Wikiquote API usage.
+- Use HTTPS URL for Wikiquote API.
+- Switch to `uv` for dependency management.
+
 ## **0.1.17** - 20/08/2023
 - Dropped support for Python 3.6 and 3.7 (3.8 is now the minimum).
 
