@@ -44,7 +44,13 @@ def json_from_url(url: Text, params: Optional[Text] = None) -> Dict[Text, Any]:
     """
     if params:
         url += urllib.parse.quote(params)
-    res = urllib.request.urlopen(url)
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "wikiquote-python/1.0 (https://github.com/federicotdn/wikiquote)"
+        },
+    )
+    res = urllib.request.urlopen(req)
     body = res.read().decode("utf-8")
     return json.loads(body)
 
