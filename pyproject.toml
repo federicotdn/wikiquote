@@ -3,7 +3,7 @@ name = "wikiquote"
 version = "0.1.17"
 description = "Retrieve quotes from any Wikiquote article."
 authors = [{ name = "Federico Tedin", email = "federicotedin@gmail.com" }]
-requires-python = "~=3.8"
+requires-python = ">=3.8,<4"
 readme = "README.md"
 license = "MIT"
 keywords = [
@@ -20,7 +20,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Topic :: Utilities",
 ]
-dependencies = ["lxml~=4.2"]
+dependencies = ["lxml~=5.4"]
 
 [project.urls]
 Homepage = "https://github.com/federicotdn/wikiquote"

@@ -7,17 +7,17 @@ clean:
 	rm -rf wikiquote.egg-info dist
 
 test:
-	pytest tests -vvv -rs
+	uv run pytest tests -vvv -rs
 
 install-types:
-	mypy wikiquote --install-types --non-interactive
+	uv run mypy wikiquote --install-types --non-interactive
 
 types:
-	mypy wikiquote
+	uv run mypy wikiquote
 
 lint:
-	ruff check --fix --output-format=full --show-fixes wikiquote tests
-	ruff format wikiquote tests
+	uv run ruff check --fix --output-format=full --show-fixes wikiquote tests
+	uv run ruff format wikiquote tests
 
 package:
 	make clean
@@ -27,4 +27,4 @@ upload: package
 	twine upload dist/*
 
 repl:
-	python3 -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'
+	uv run python -i -c 'from wikiquote import *; p=lambda xs: [print(x, "\n") for x in xs]'
