@@ -20,7 +20,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Topic :: Utilities",
 ]
-dependencies = ["lxml~=5.4"]
+dependencies = ["lxml>=5.4,<7.0"]
 
 [project.urls]
 Homepage = "https://github.com/federicotdn/wikiquote"
